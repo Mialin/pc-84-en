@@ -1,0 +1,153 @@
+.my-invites .part {
+  margin: 0 0 40px 0;
+}
+
+.my-invites .part h2 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.my-invites .part h3 {
+  color: #666666;
+  margin: 40px 0 0 0;
+}
+
+.my-invites .part.part1 {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.my-invites .part.part1 .howItWorks {
+  padding: 0 0 40px 0;
+}
+
+.my-invites .part.part1 .howItWorks p, .my-invites .part.part1 .howItWorks .part.part2 .invi-cont input, .my-invites .part.part2 .invi-cont .part.part1 .howItWorks input, .my-invites .part.part1 .howItWorks .part.part2 .invi-cont textarea, .my-invites .part.part2 .invi-cont .part.part1 .howItWorks textarea {
+  line-height: 2em;
+}
+
+.my-invites .part.part2 {
+  width: 100%;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.my-invites .part.part2 .invi-cont {
+  width: 560px;
+  margin: 40px 0 0 0;
+}
+
+.my-invites .part.part2 .invi-cont label {
+  width: 25%;
+  float: left;
+  font-weight: bold;
+}
+
+.my-invites .part.part2 .invi-cont p, .my-invites .part.part2 .invi-cont input, .my-invites .part.part2 .invi-cont textarea {
+  width: 75%;
+  float: left;
+  margin: 0 0 40px 0;
+}
+
+.my-invites .part.part2 .invi-cont input, .my-invites .part.part2 .invi-cont textarea {
+  background-color: #fff;
+  height: 40px;
+  border: 1px solid #ddd;
+  padding: 0 .7em;
+  position: relative;
+  border-radius: 0;
+}
+
+.my-invites .part.part2 .invi-cont textarea {
+  height: 100px;
+  resize: none;
+}
+
+.my-invites .part.part2 .invi-cont .action-btns {
+  float: right;
+  margin: 0 0 40px 0;
+}
+
+.my-invites .part.part2 .invi-cont .action-btns .yes-btn {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 0 3em;
+  text-transform: uppercase;
+  background-color: #ffa100;
+  color: #fff;
+  margin: 0 0 0 20px;
+}
+
+.my-invites .part.part2 .invi-cont .action-btns .yes-btn:hover {
+  color: #fff !important;
+  background-color: #ff8f0f;
+}
+
+.my-invites .part.part2 .invi-cont .action-btns .no-btn {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 0 3em;
+  text-transform: uppercase;
+  background-color: #e8e8e8;
+  color: #666666;
+}
+
+.my-invites .part.part2 .invi-cont .action-btns .no-btn:hover {
+  color: #666666 !important;
+  background-color: #ddd;
+}
+
+.my-invites .part.part2 .share-item {
+  margin: 0 0 20px 0;
+  margin: 0;
+}
+
+.my-invites .part.part2 .share-item a {
+  display: inline-block;
+}
+
+.my-invites .part.part2 .share-item a i {
+  color: #fff;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.my-invites .part.part2 .share-item a i.share-weibo {
+  background-color: #e6162d !important;
+}
+
+.my-invites .part.part2 .share-item a i.share-fb {
+  background-color: #3a5795 !important;
+}
+
+.my-invites .part.part2 .share-item a i.share-email {
+  background-color: #54d0f4 !important;
+}
+
+.my-invites .part.part2 .share-item p, .my-invites .part.part2 .share-item .invi-cont input, .my-invites .part.part2 .invi-cont .share-item input, .my-invites .part.part2 .share-item .invi-cont textarea, .my-invites .part.part2 .invi-cont .share-item textarea {
+  display: inline-block;
+  color: #666666;
+}
+
+.my-invites .part.part3 table {
+  margin: 20px 0 0 0;
+}
+
+.my-invites .part.part3 table th {
+  color: #666666;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.my-invites .part.part3 table.pt-overview td:nth-child(3) {
+  font-weight: bold;
+}

@@ -1,0 +1,84 @@
+@import color
+@import text
+@import components
+
+
+.item
+
+	.item-cont
+
+		.share-item
+			margin: 0 0 20px 0
+
+			a 
+				display: inline-block
+
+				i 
+					color: #fff
+					font-size: $icon_size_sm
+					width: 18px
+					height: 18px
+					line-height: 18px
+					text-align: center
+
+					&.share-weibo 
+						background-color: $weibo_color !important
+
+					&.share-fb
+						background-color: $fb_color !important
+
+					&.share-email
+						background-color: $email_color !important
+
+			p 
+				display: inline-block
+				color: $txt_grey
+
+
+
+.popup-mask
+	@include popup_base()
+	display: none
+
+	.popup-content
+
+		&.share-popup
+			width: 620px
+			// padding: 50px 65px 30px
+			margin: -250px 0 0 -310px
+
+	.invi-head
+		width: 
+		margin: 0 auto
+		padding: 20px 0
+		border-bottom: 1px solid $btn_grey
+
+		h1
+			font-weight: normal
+			text-align: center
+
+		p 
+			width: 85%
+			margin: 0 auto 20px
+			text-align: center
+			line-height: 1.5em
+			color: $txt_grey
+
+
+
+	.invi-cont
+		@include invi-cont()
+		margin: 30px auto 0
+
+
+		.action-btns
+			float: right
+			margin: 0 0 40px 0
+
+			.yes-btn
+				@include yes-btn()
+				margin: 0 0 0 20px
+
+			.no-btn
+				@include no-btn()
+

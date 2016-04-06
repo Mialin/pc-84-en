@@ -1,0 +1,164 @@
+.item .item-cont .share-item {
+  margin: 0 0 20px 0;
+}
+
+.item .item-cont .share-item a {
+  display: inline-block;
+}
+
+.item .item-cont .share-item a i {
+  color: #fff;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.item .item-cont .share-item a i.share-weibo {
+  background-color: #e6162d !important;
+}
+
+.item .item-cont .share-item a i.share-fb {
+  background-color: #3a5795 !important;
+}
+
+.item .item-cont .share-item a i.share-email {
+  background-color: #54d0f4 !important;
+}
+
+.item .item-cont .share-item p, .item .item-cont .share-item .popup-mask .invi-cont input, .popup-mask .invi-cont .item .item-cont .share-item input, .item .item-cont .share-item .popup-mask .invi-cont textarea, .popup-mask .invi-cont .item .item-cont .share-item textarea {
+  display: inline-block;
+  color: #666666;
+}
+
+.popup-mask {
+  position: fixed;
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 102;
+  overflow: auto;
+  display: none;
+}
+
+.popup-mask .popup-container {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-radius: 100%;
+}
+
+.popup-mask .popup-container .popup-content {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+.popup-mask .popup-content.share-popup {
+  width: 620px;
+  margin: -250px 0 0 -310px;
+}
+
+.popup-mask .invi-head {
+  margin: 0 auto;
+  padding: 20px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.popup-mask .invi-head h1 {
+  font-weight: normal;
+  text-align: center;
+}
+
+.popup-mask .invi-head p, .popup-mask .invi-head .invi-cont input, .popup-mask .invi-cont .invi-head input, .popup-mask .invi-head .invi-cont textarea, .popup-mask .invi-cont .invi-head textarea {
+  width: 85%;
+  margin: 0 auto 20px;
+  text-align: center;
+  line-height: 1.5em;
+  color: #666666;
+}
+
+.popup-mask .invi-cont {
+  width: 560px;
+  margin: 40px 0 0 0;
+  margin: 30px auto 0;
+}
+
+.popup-mask .invi-cont label {
+  width: 25%;
+  float: left;
+  font-weight: bold;
+}
+
+.popup-mask .invi-cont p, .popup-mask .invi-cont input, .popup-mask .invi-cont textarea {
+  width: 75%;
+  float: left;
+  margin: 0 0 40px 0;
+}
+
+.popup-mask .invi-cont input, .popup-mask .invi-cont textarea {
+  background-color: #fff;
+  height: 40px;
+  border: 1px solid #ddd;
+  padding: 0 .7em;
+  position: relative;
+  border-radius: 0;
+}
+
+.popup-mask .invi-cont textarea {
+  height: 100px;
+  resize: none;
+}
+
+.popup-mask .invi-cont .action-btns {
+  float: right;
+  margin: 0 0 40px 0;
+}
+
+.popup-mask .invi-cont .action-btns .yes-btn {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 0 3em;
+  text-transform: uppercase;
+  background-color: #ffa100;
+  color: #fff;
+  margin: 0 0 0 20px;
+}
+
+.popup-mask .invi-cont .action-btns .yes-btn:hover {
+  color: #fff !important;
+  background-color: #ff8f0f;
+}
+
+.popup-mask .invi-cont .action-btns .no-btn {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 0 3em;
+  text-transform: uppercase;
+  background-color: #e8e8e8;
+  color: #666666;
+}
+
+.popup-mask .invi-cont .action-btns .no-btn:hover {
+  color: #666666 !important;
+  background-color: #ddd;
+}

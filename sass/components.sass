@@ -1,0 +1,136 @@
+@mixin btn_base() 
+	height: 40px
+	line-height: 40px
+	font-size: 14px
+	font-weight: bold
+	display: block
+	float: left
+	padding: 0 3em
+	text-transform: uppercase
+
+@mixin yes-btn()
+		@include btn_base()
+		background-color: $prim_orange
+		color: #fff
+
+		&:hover
+			color: #fff !important
+			background-color: $prim_orange_hover
+
+@mixin no-btn()
+		@include btn_base()
+		background-color: $btn_grey
+		color: $txt_grey
+
+		&:hover
+			color: $txt_grey !important
+			background-color: $btn_grey_hover
+
+
+
+// ====================================================
+
+@mixin popup_base()
+	position: fixed
+	margin: auto
+	left: 0
+	top: 0
+	bottom: 0
+	right: 0
+	width: 100%
+	height: 100%
+	background-color: rgba(0,0,0,.3)
+	z-index: 102
+	overflow: auto
+
+	.popup-container
+		position: absolute
+		margin: auto
+		left: 0
+		top: 0
+		bottom: 0
+		right: 0
+		width: 0
+		height: 0
+		border-radius: 100%
+
+		.popup-content
+			background-color: #fff
+			border: 1px solid #ddd
+			position: relative
+
+
+
+
+
+// ====================================================
+
+@mixin invi-cont() 
+		width: 560px
+		margin: 40px 0 0 0
+
+		label
+			width: 25%
+			float: left
+			font-weight: bold
+
+		p 
+			width: 75%
+			float: left
+			margin: 0 0 40px 0
+
+		input 
+			@extend p 
+			background-color: #fff;
+			height: 40px;
+			border: 1px solid #ddd;
+			padding: 0 .7em;
+			position: relative;
+			border-radius: 0;
+
+		textarea
+			@extend input 
+			height: 100px
+			resize: none
+
+
+
+// ====================================================
+
+
+@mixin social-cluster()
+	margin: 0 0 20px 0
+
+	a 
+		display: inline-block
+
+		i 
+			color: #fff
+			font-size: $icon_size_sm
+			width: 18px
+			height: 18px
+			line-height: 18px
+			text-align: center
+
+			&.share-weibo 
+				background-color: $weibo_color !important
+
+			&.share-fb
+				background-color: $fb_color !important
+
+			&.share-email
+				background-color: $email_color !important
+
+	p 
+		display: inline-block
+		color: $txt_grey
+
+
+
+
+
+
+
+
+
+

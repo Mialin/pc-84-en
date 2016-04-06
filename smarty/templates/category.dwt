@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Yamibuy.com - {$cat_path.{$cat_path|@count - 1}.cat_ename}</title>
+	<meta name="keywords" content="Yamibuy.com, Yamibuy, online shopping, asian, food, beauty, appliances, health, collectibles, baby products, bedding, bath, accessories, toys, personal care">
+	<meta name="description" content="Yamibuy.com is the largest online shop for asain food, beauty, tools and houseware, and health products in the United States. The biggest selection of asian products you can find.">
+	{include file='common/head.dwt'}
+	<link rel="stylesheet" type="text/css" href="style/category.css">
+	
+	{literal}
+	<script>
+		$(function() {
+
+			$(".fa-caret-up").hide();
+
+			$('.toggle-cont').click(function(){
+			
+				$('.hidden-cont').slideToggle();
+				$(this).find(".fa-caret-up, .fa-caret-down").toggle();
+				$('.show-hidden').text( $('.show-hidden').text() == 'See less' ? "See more" : "See less");
+			});
+
+		});
+
+
+	</script>
+	{/literal}
+	
+</head>
+
+<body>
+	<div class="cat-page cat">
+		{include file='common/header.dwt'}
+        
+        <input type="hidden" id="sortBy" name="sortBy1" value="{$sort_by}">
+		<input type="hidden" id="sortOrder" name="sortOrder1" value="{$sort_order}">
+		<input type="hidden" id="isPromote" name="isPromote1" value="{$is_promote}">
+		<input type="hidden" id="catId" name="catId1" value="{$cat_id}">
+        
+        
+		<div class="promo-bar">
+			 <div class="wrapper">
+			<!--	<img src="images/promo-bar.jpg" width="1200"> -->
+			</div> 
+		</div>
+		<div class="breadcrumb">
+			<div class="wrapper">
+				<a href="/en">Home</a>&#62;
+				{foreach from=$cat_path item=p key=k}
+					<!--不显示一级分类 最后一个分类不能点击 并且 去掉箭头-->
+					{if $k neq 0}
+						{if ($k+1) neq $cat_path|@count}
+							<a href="category.php?id={$p.cat_id}"><h2>{$p.cat_ename}</h2></a>&#62;
+						{else}
+							<a><h2>{$p.cat_ename}</h2></a>
+						{/if}
+					{/if}	
+				{/foreach}	
+			</div>
+		</div>
+		
+		<div class="two-col cf">
+			<div class="wrapper">
+				<div class="left-col cf">
+					<div class="cat-cont">
+						{if $sub_cat|@count > 1}<p class="cat-title">Categories</p>	{/if}					
+						<ul class="third-cat">
+    						{foreach from=$sub_cat item=sc}
+                            	<li><h2><a href="category.php?id={$sc->cat_id}">{$sc->cat_ename}</a></h2></li>        				
+                            {/foreach}
+						</ul>
+					</div>
+					<div class="cat-brand">
+						<p class="title">Brands</p>
+						<div class="brand-cont">
+						
+							{assign var="count" value="0"}
+						
+							{foreach from=$cat_brands->Brands item=bcat}
+								
+								{foreach from=$bcat item=brand}
+								
+									{if $count < 10}
+									
+										{$count=$count+1}
+										
+										<div class="brand brand{$count}">
+											<input {if in_array($brand->brand_id, $brands_arr)}checked{/if} type="checkbox" name="bid" class="cat-brand" id="brand{$count}" value="{$brand->brand_id}" bname="{$brand->brand_ename}" onClick="filter(1,true)">
+											<label for="brand{$count}">{$brand->brand_ename}</label>
+										</div>
+									
+									{else}
+									
+										{if $count eq 10}
+											<div class="hidden-cont">
+										{/if}
+										
+										{$count=$count+1}
+										
+											<div class="brand brand3">
+												<input {if in_array($brand->brand_id, $brands_arr)}checked{/if} type="checkbox" name="bid" class="cat-brand" id="brand{$count}" value="{$brand->brand_id}" bname="{$brand->brand_ename}" onClick="filter(1,true)">
+												<label for="brand{$count}">{$brand->brand_ename}</label>
+											</div>
+										
+									{/if}
+								
+								{/foreach}
+								
+							{/foreach}
+							
+							{if $count > 10}</div>{/if}
+						
+							{if $count > 10}
+                                <div class="toggle-cont cf">
+                                    <button class="show-hidden">See more</button>
+                                    <i class="fa fa-caret-down"></i>
+                                    <i class="fa fa-caret-up"></i>
+                                </div>
+                            {/if}
+						</div>
+					</div>
+					<div class="recent-view">
+						<p class="title">Recently Viewed</p>
+                        <div class="box-cont">
+                        	{if $viewedItems|@count > 0}
+                                {foreach from=$viewedItems item=vItem}
+                                    <div class="xs-box">
+                                        <a href="goods.php?id={$vItem->gid}">
+                                            <img src="{$vItem->basic->image}" width="160">
+                                            <div class="item-detail">
+                                                <p class="des">{$vItem->basic->ename}</p>
+                                                <p class="price">${$vItem->basic->shop_price}</p>
+                                            </div>
+                                        </a>
+                                    </div>	
+                                {/foreach}
+                            {else}
+                            	<p class="des">No browsing history</p>
+                            {/if}
+                        </div>
+					</div>
+				</div>
+				<div class="right-col cf">
+					<div class="actions-cont cf">
+                    {if $brand_name_list|@count > 0}
+						<p class="filter-label">Showing brands :</p>
+                    {else}
+                    	<p class="filter-label"></p>
+                    {/if}
+						<div class="selected-brand-cont">
+                        	
+                            {foreach from=$brand_name_list item=bnl}
+                            	<p class="selected-brand">{$bnl}</p>
+								<!-- <a class="fvpp-close">✕</a> -->
+                            {/foreach}
+
+						</div>
+						<div class="actions cf">
+							<label for="list-order">Sory by</label>
+							<select class="list-order" id="list-order" onchange='setSortMode(this.id)'>
+								<option {if $sort_order_str eq "sales"}selected{/if} value="sales">Best seller</option>
+								<option {if $sort_order_str eq "popularity"}selected{/if} value="popularity">Popularity</option>
+								<option {if $sort_order_str eq "priceHigh"}selected{/if} value="priceHigh">Price high to low</option>
+								<option {if $sort_order_str eq "priceLow"}selected{/if} value="priceLow">Price low to high</option>
+							</select>
+						</div>
+					</div>
+                    
+                    <div id='itemContainer'>
+						{include file='common/items.dwt'}
+					</div>	
+					
+				</div>
+			</div>
+		</div>
+		{include file='common/footer.dwt'}
+	</div>
+	
+	{include file='common/top_cs.dwt'}
+    
+    
+    {literal}
+	<script> 
+    function filter(page,is_page_reset)
+    {
+    		//如果is_page_reset为true 把page设置为1
+    		page = is_page_reset ? 1 : page
+			$.yamibuy.common.doAjax('category.php',{is_ajax:"1",brand_name_list:getBrandNames()},
+			function(data){
+					var response = $(data.html);
+					
+					//显示"品牌筛选"四个字
+					var filter_label = $(response).find('.filter-label').html();
+					//$('.filter-label').html(filter_label);
+					
+					//显示选中的品牌
+					var content = $(response).find('.selected-brand-cont').html();
+					//$('.selected-brand-cont').html(content);
+
+					$.yamibuy.cart.bind();
+				    $.yamibuy.favorites.bind();
+				} );
+			
+			//用字符串拼接品牌列表显示
+			var brand_checked = $(".brand-cont").find("input[name=bid]:checked");
+			
+			//如果选中的元素的个数大于零
+			if($(brand_checked).length  > 0)
+			{
+				//先清空文字
+				$(".selected-brand-cont").html('');
+				$(".filter-label").html('');
+				
+				//便利每一个选中的checkbox 拼接字符串
+				var brand_str = '<p class="filter-label">'+"Showing brands:"+'</p>';
+				$(brand_checked).each(function(){	
+					brand_str = brand_str  + '<p class="selected-brand">'+$(this).attr("bname")+' '+'</p>';
+				});
+
+				$(".selected-brand-cont").append(brand_str);
+			}
+			//如果选中元素个数为零
+			else
+			{
+				//清空文字
+				$('.filter-label').html('');
+				$(".selected-brand-cont").html('');
+			}
+
+	
+			$.yamibuy.common.doAjax('service.php',{act:'category',sort_by:getSortBy(),sort_order:getSortOrder(),is_promote:isPromote(),cat_id:getCatId(),brands:getBrandList(),page:page},
+			function(data){
+					$('#itemContainer').empty();
+					$('#itemContainer').append(data.html);
+					$.yamibuy.cart.bind();
+					$.yamibuy.favorites.bind();
+				},{showloading:true});
+
+			updateUrl();
+			if(is_page_reset)
+				resetUrlPage();
+				
+				
+    }
+    function changePage(page)
+    {
+		filter(page,false);
+		updateUrl();
+		//page设置为当前的page
+		window.history.pushState('', '', changeURLArg(location.href,"page",encodeURIComponent(page)));
+    }
+    
+    function getKeyword()
+    {
+    	var keywords=$('#keywords').val();
+    	return keywords;   		
+  	}
+    
+    function getSortOrder()
+    {
+    	var sortOrder=$('#sortOrder').val();
+    	return sortOrder;    	
+    }
+    
+    function getSortBy()
+    {
+    	var sortBy=$('#sortBy').val();
+    	return sortBy;
+    }
+    
+    
+    function getCatId()
+    {
+    	var catId=$('#catId').val();
+    	return catId;
+    }
+    
+    function isPromote()
+    {
+    	var isPromote=$('#isPromote').val();
+    	return isPromote;
+    }
+    
+    function getBrandList()
+    {    							
+			var brands=[];
+			$('.brand-cont :checked').each(
+				function() {
+					brands.push($(this).val());		
+				});
+
+				var brandsList = brands.join(',');				
+				return brandsList;
+  	}  	
+	
+	function getBrandNames()
+    {    							
+			var brands=[];
+			$('.brand-cont :checked').each(
+				function() {
+					brands.push($(this).attr('bname'));		
+				});
+
+				var brandsList = brands.join(',');				
+				return brandsList;
+  	}  
+	
+	function setSortMode(eId)
+  	{
+  		var sortMode=document.getElementById(eId).value;
+  		
+  		switch(sortMode)
+  		{
+		    case "sales":
+		        $('#sortBy').val("3");
+		        $('#sortOrder').val("");
+		        break;
+		    case "popularity":
+		        $('#sortBy').val("2");
+		        $('#sortOrder').val("");
+		        break;
+		    case "priceHigh":
+		        $('#sortBy').val("4");
+		        $('#sortOrder').val("0");
+		        break;
+		    case "priceLow":
+		        $('#sortBy').val("4");
+		        $('#sortOrder').val("1");
+		        break;        		    
+			}
+			
+			filter(1,true);
+			
+  	}
+	
+	
+	
+	
+	
+	
+	function changeURLArg(url,arg,arg_val)
+	{
+		var pattern=arg+'=([^&]*)';
+		var replaceText=arg+'='+arg_val;
+		var removeText=""
+		if(url.match(pattern))
+		{
+			var tmp='/('+ arg+'=)([^&]*)/gi';
+			tmp=url.replace(eval(tmp),replaceText);
+			return tmp;
+		}
+		else
+		{
+			if(url.match('[\?]'))
+			{
+				return url+'&'+replaceText;
+			}
+			else
+			{
+				return url+'?'+replaceText;
+			}
+		}
+		return url+'\n'+arg+'\n'+arg_val;
+	}	
+
+	function updateUrl()
+	{
+		window.history.pushState('', '', changeURLArg(location.href,"brands",encodeURIComponent(getBrandList())));
+		window.history.pushState('', '', changeURLArg(location.href,"brand_name_list",encodeURIComponent(getBrandNames())));;
+		window.history.pushState('', '', changeURLArg(location.href,"sort_order",encodeURIComponent(getSortOrder())));
+		window.history.pushState('', '', changeURLArg(location.href,"sort_by",encodeURIComponent(getSortBy())));
+	}	
+	
+	//把url的page设置为1
+	function resetUrlPage()
+	{
+		window.history.pushState('', '', changeURLArg(location.href,"page",1));
+	}	
+  	
+  	
+  </script>
+  {/literal}
+    
+    
+</body>
+
+</html>

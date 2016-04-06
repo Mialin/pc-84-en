@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Yamibuy.com - {$goods->Basic->ename}</title>
+	<meta name="keywords" content="Yamibuy.com, Yamibuy, online shopping, asian, food, beauty, appliances, health, collectibles, baby products, bedding, bath, accessories, toys, personal care">
+	<meta name="description" content="Yamibuy.com is the largest online shop for asain food, beauty, tools and houseware, and health products in the United States. The biggest selection of asian products you can find.">
+	{include file='common/head.dwt'}
+	<link rel="stylesheet" type="text/css" href="style/goods.css">
+	<script type="text/javascript" src="js/goods.js"></script>
+	<!--FB 分享 config-->
+	<meta property="og:title" content="Yamibuy- {$goods->Basic->ename}" />
+	<meta property="og:description" content="I was shopping on Yamibuy.com and saw some things that you'll love. Check this thing {$goods->Basic->ename}. And because I referred you, you’ll get 300 points ($3 off) your first order when you use my link." />		
+	<meta property="og:image" content={$goods->Basic->goods_img} />	
+	<meta property="og:type" content="website" />	
+	<meta property="fb:app_id" content="1815382415355586" />
+	
+</head>
+
+<body>
+	<input type="hidden" name="gid" value="{$gid}">
+ 
+	<div class="cat-page item">
+		{include file='common/header.dwt'}		
+		<input type="hidden" id="zipcode" name="zipcode" value="{$zipcode}">
+		<div class="promo-bar">
+			<!-- <div class="wrapper">
+				<img src="images/promo-bar.jpg" width="1200">
+			</div> -->
+		</div>
+		<div class="breadcrumb">
+			<div class="wrapper">
+				<a href="index.php">Home</a>&#62;
+
+				{foreach from=$goods->Category item=cat key=k}
+					
+					{if $k neq 0}
+						<a href="category.php?id={$cat->cat_id}">{$cat->cat_ename}</a>{if ($k+1) < $goods->Category|@count}&#62{/if}
+					{/if}
+
+				{/foreach}
+				
+				<!--<a href="brand.php?id={$goods->Detail->Brand->brand_id}">{$goods->Detail->Brand->brand_ename}</a>-->
+	
+			</div>
+		</div>
+		<div class="item-cont cf">
+			<div class="wrapper">
+				<div class="img-cont">
+					<div class="main-img-cont">
+						<div class="img-cont">
+							<img class="main-img" src="{$goods->Basic->images.0}">
+						</div>
+					</div>
+					<ul>
+						
+						{foreach from=$goods->Basic->images item=thumb}
+							<li>
+								<div class="thumb-cont">
+									<img src="{$thumb}">
+								</div>
+							</li>
+						{/foreach}
+
+					</ul>
+				</div>
+				<div class="detail-cont">
+					<h1 class="item-name">{$goods->Basic->ename}</h1>
+					<div class="share-item">						
+						<a href="http://service.weibo.com/share/share.php?{$weibo}" target="_blank"><i class="fa fa-weibo share-weibo"></i></a>
+						<a href="javascript:;" onclick="shareFb({$goods->gid},'{$invite_code}')"><i class="fa fa-facebook share-fb"></i></a>
+						<a href="javascript:;" onclick="openPopup()"><i class="fa fa-envelope-o share-email"></i></a>
+						<p>Share With Friends</p>
+					</div>
+					<!-- <dl>
+						<dt>销售配送</dt>
+						<dd class="seller adnl-info">水星家纺<p class="adnl-info-detail">some shit some shit some shit some shit some shit</p></dd>
+						<dt>售价</dt>
+						<dd class="price"><span class="item-price">$28.99&nbsp;</span>+ $5.99运费(满$49免运费)</dd>
+						<dt>送积分</dt>
+						<dd>28</dd>
+						<dt>品牌</dt>
+						<dd>CANMAKE</dd>
+						<dt>品牌产地</dt>
+						<dd>日本</dd>
+						<dt>净含量</dt>
+						<dd>5(单位: g)</dd>
+						<dt>产品评论</dt>
+						<dd>水星家纺</dd>
+						<dt>数量</dt>
+						<dd>水星家纺</dd>
+					</dl> -->
+					<table>
+						<tr>
+							<td>Sold by</td>
+							<td class="seller adnl-info">{$goods->vendor->vendor_ename}{if $goods->vendor->vendor_id neq 0}&nbsp;<span class="price">Yamibuy's vendor</span><i class="fa fa-question-circle"><p class="adnl-info-detail"><span>Earning Points</span>{$goods->vendor->points_en}<br><br><span>Quality Guaranteed</span>{$goods->vendor->quality_en}</p></i>&nbsp;&nbsp;{/if}</td>
+						</tr>
+						<tr>
+							<td>Price</td>
+							<td>
+                            	<span class="item-price">
+                                	{if $goods->Basic->is_promote}
+                                		{$goods->Basic->currency}{$goods->Basic->promote_price}<span class="ori-price">Original Price: {$goods->Basic->currency}{$goods->Basic->shop_price}</span>
+                                    {else}
+                                    	{$goods->Basic->currency}{$goods->Basic->shop_price}
+                                    {/if}
+                                </span>
+                            </td>
+						</tr>
+						<tr>
+							<td>Points earned</td>
+							<td>{$goods->Detail->points}</td>
+						</tr>
+						<tr>
+							<td>Brand</td>
+							<td><a href="brand.php?id={$goods->Detail->Brand->brand_id}" target="_blank">{$goods->Detail->Brand->brand_ename}</a></td>
+						</tr>
+						<tr>
+							<td>Origin</td>
+							<td>{$goods->Detail->eorigin}</td>
+						</tr>
+						<tr>
+							<td>Net Wt.</td>
+							<td>{$goods->Detail->Weight->goods_weight}( {$goods->Detail->Weight->unit})</td>
+						</tr>
+						<tr>
+							<td>Review</td>
+							<td>
+								<div id="score-callback-read" data-score="{$comments->rate}" class="rating-star-cont"></div>
+								{if $comments->count gt 0}
+									<a class="go-to-comment" href="#comment-cont">(See {$comments->count} reviews)</a>
+								{/if}
+							</td>
+						</tr>
+						<tr>
+							<td>Quantity</td>
+							<td>
+							<div class="quant">
+							<button class="minus" id="minus">-</button><span id="item-quant-{$goods->gid}" class="item-quant">1</span><button id="plus" class="plus">+</button>
+							</div>
+							</td>
+						</tr>
+						{if $goods->Basic->is_district == 1}
+						<tr>
+							<td>配送至</td>
+							<td>
+								{if $zipcode == ""}								
+								<p id="setZipcode" style="display:none;"></p>
+								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">查看是否适用你的区域</a>
+								{else}
+								<p id="setZipcode">{$zipcode}</p>
+								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">修改</a>
+								{/if}
+							</td>
+						</tr>
+						{/if}
+					</table>
+					<div class="action-btns">
+						<a href="javascript:;" data-name="btnAddedFavorites" data-gid="{$goods->gid}" class="add-to-fav"><i class="fa fa-heart" style="color: #f25950;"></i>&nbsp;Favorite It</a>
+						<div class="ld-cont cf">
+							<div id="notInArea" style="display:none;"><tr>此商品只配送特定区域喔!</tr></div>							
+							{if $goods->Basic->is_district == 1}
+							<a href="javascript:;" id="btnText" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}style="display:none"{/if}>{if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;加入购物车{else}已售完{/if}</a>
+							<a href="javascript:;" id="btnText2" data-name="btnAddToCart" data-for="#item-quant-{$goods->gid}" data-gid="{$goods->gid}" data-vid="{$goods->vendor->vendor_id}" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1 || $is_local == 0}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}{else}style="display:none"{/if}>{if $is_local == 0} 不在配送范围 {else if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;加入购物车{else}已售完{/if}</a>
+							{else}							
+							<a href="javascript:;" data-name="btnAddToCart" data-for="#item-quant-{$goods->gid}" data-gid="{$goods->gid}" data-vid="{$goods->vendor->vendor_id}" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1}disabled-prim-btn{/if}">{if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;Add To Cart{else}Sold Out{/if}</a>
+							{/if}
+						</div>
+					</div>	
+					{if $goods->Detail->in_stock eq 0}
+						<div class="oos-reminder">
+								{if $check_reminder_flag->remindFlag eq 1}
+									<p class="rem-email">Item reminder email will be sent to <strong>{$check_reminder_flag->email}</strong></p>
+								{else}
+									<p class="rem-label">Want to know when it's back?</p>
+									<a class="remind-btn" href="javascript:;" onclick="oos_remind_me({$goods->gid})">Remind Me</a>
+								{/if}
+						</div>
+					{/if}
+				</div>
+				
+				{if $goods->vendor->vendor_id eq 0}
+					<div class="grt">
+						<ul>
+							<li><i class="fa fa-thumbs-up"></i>Guarantee</li>
+							<li><i class="fa fa-tag"></i>Low Price</li>
+							<li><i class="fa fa-calendar"></i>7-day Return</li>
+							<li><i class="fa fa-trophy"></i>Service</li>
+							<li><i class="fa fa-cube"></i>Free Shipping</li>
+							<li><i class="fa fa-money"></i>Earn Points</li>
+						</ul>
+					</div>
+					
+				{else}
+                	<div class="tp-info-cont cf">
+						<div class="info cf">
+							<p class="tp-info-label">Vendor</p>
+							<p class="tp-info-content tp-vendor">{$goods->vendor->vendor_ename}</p>
+						</div>
+						<div class="info cf">
+							<p class="tp-info-label">Shipping Information</p>
+							<!--<p class="tp-info-content">Shipping fee: {if $goods->vendor->shipping.0->shipping_fee > 0}${$goods->vendor->shipping.0->shipping_fee}{else}Free shipping{/if} {if $goods->vendor->shipping.0->free_shipping > 0}(Free shipping if order over ${$goods->vendor->shipping.0->free_shipping}){/if}<br>{if $goods->vendor->delivery_en}{$goods->vendor->delivery_en}{/if}</p>-->
+                            
+                            <p class="tp-info-content">
+                                {foreach from=$goods->vendor->shipping item=shipping}
+                                    {$shipping->shipping_name} {if $shipping->shipping_fee > 0}${$shipping->shipping_fee}{else}Free shipping{/if}{if $shipping->free_shipping > 0}(Free shipping if order over ${$shipping->free_shipping}){/if}<br>
+                                {/foreach}
+                                {if $goods->vendor->delivery_en}{$goods->vendor->delivery_en}{/if}
+                            </p>
+                            
+						</div>
+						<div class="info cf">
+							<p class="tp-info-label">Return Policy</p>
+							<p class="tp-info-content">{$goods->vendor->return_policy_en}</p>
+						</div>
+					</div> 
+				{/if}
+				
+			</div>
+		</div>
+		<div class="may-like cf">
+			<div class="wrapper">
+				<p class="title">You may like</p>
+				<div class="caro-cont">
+					<a class="jcarousel-prev"></a>
+					<a class="jcarousel-next"></a>           
+					<div class="jcarousel">
+						<ul class="caro">
+							
+							{foreach from=$goods_may_like->items item=gml}
+								<li class="transition">
+									<div class="sm-box">
+										<a href="goods.php?id={$gml->gid}">
+											<img src="{$gml->basic->image}" width="160">
+											<div class="item-detail">
+												<p class="des">{$gml->basic->ename}</p>
+												<p class="price">${$gml->basic->shop_price}</p>
+											</div>
+										</a>
+									</div>                
+								</li>
+								
+							{/foreach}
+                                                          
+						</ul>                         
+					</div>                         
+				</div>
+			</div>
+		</div>
+		<div class="two-col cf">
+			<div class="wrapper">
+				<div class="recent-view">
+					<p class="title">You recently viewed</p>
+					<div class="box-cont">
+						
+                        {if $viewed_history|@count > 0}
+                            {foreach from=$viewed_history item=vh}
+                                <div class="xs-box">
+                                    <a href="goods.php?id={$vh->gid}">
+                                        <img src="{$vh->basic->image}" width="160">
+                                        <div class="item-detail">
+                                            <p class="des">{$vh->basic->ename}</p>
+                                            <p class="price">${$vh->basic->shop_price}</p>
+                                        </div>
+                                    </a>
+                                </div>	
+                            {/foreach}
+                        {else}
+                        	<p class="des">No browing history</p>
+                        {/if}
+						
+					</div>
+				</div>
+				<div class="item-des">
+					<div>
+					<h2 class="title">Item Details</h2>
+					<div class="des-img-cont">
+						{$goods->Detail->goodsEdesc}
+						</div>
+					</div>
+					<div id="comment-cont" class="comment-cont">
+						<h2 class="title">Reviews</h2>
+						<div class="comments">
+							<div class="overall">
+								{if $comments->count gt 0}
+									<p class="rating">Rating: </p><div id="score-callback-read" data-score="{$comments->rate}" class="rating-star-cont"></div><span class="score">{$comments->rate}</span>
+								
+								{else}
+									<p class="rating">No reviews</p>
+								
+								{/if}
+								<a id="new-review-btn" class="new-review-btn red-btn" href="javascript:void(0)">Write a Review</a>
+							</div>
+							<div id="new-review-cont" class="new-review-cont">
+								<div class="sm-box">
+									<a href="goods.php?id={$goods->gid}">
+										<img src="{$goods->Basic->images.0}" width="160">
+										<div class="item-detail">
+											<p class="des">{$goods->Basic->ename}</p>
+											<p class="price">${$goods->Basic->shop_price}</p>
+										</div>
+									</a>
+								</div>
+								<div class="rating-cont">
+									<div class="star-rating">
+										<p>Rating:</p>
+                                        <div id="score-callback-write" class="rating-star-cont"></div>
+									</div>
+									<div class="review">
+										<p>Review:</p>
+										<textarea name="msg"></textarea>
+									</div>
+									<!--<div class="upload-img-cont">
+										<div class="uploaded-img-cont" style="display:none">
+											<div class="uploaded-img"><img id='i_img' src="" width=50 height=50><a class="fvpp-close">&#10005;</a></div>
+										</div>
+										<div class="img-actions">
+											<form id="img-form" action="service.php" enctype="multipart/form-data">
+												<input id="file" class="choose-file-btn" type="file" name="pic" accept="image/*" multiple />
+												<input id="submit-img" class="upload-btn" type="submit" value="提交图片">
+											</form>
+
+											 <a class="upload-img-btn line-btn" href="">上传图片</a>
+										</div>
+									</div> -->
+									<div class="nickname">
+										<p>Nickname:</p>
+										<input name="nickname" type="text">
+									</div>
+									<div class="action-btns">
+										<a id="cancel-review-btn" class="line-btn cancel" href="javascript:void(0)">Cancel</a>
+										<a id="comment-submit" class="red-btn submit" href="javascript:void(0)">Submit Review</a>
+									</div>
+								</div>
+							</div>
+							<div class="comment-item-cont" name="comment-cont" id="comment-cont">
+								
+								{foreach from=$comments->comments item=comment}
+									<div class="comment-item">
+										<img class="profile-pic" src="{$comment->avatar}">
+										<div class="comment-content">
+											<div id="score-callback-read" data-score="{$comment->rate}"></div>
+											<p class="author">{$comment->username}</p>
+											<p class="review">{$comment->message}</p>
+											<p class="date">{$comment->date}<i class="fa fa-thumbs-o-up"></i><span class="t-up"> 1</span></p>
+										</div>
+									</div>
+								{/foreach}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="popup-mask">
+			<div class="popup-container">
+				<div class="popup-content share-popup cf">
+					<div class="invi-head">
+						<h1>Share this item with friends</h1>
+						<p>After Login, use this link to send your friend 300 points upon their registration, and you will earn 500 points when they make first purchase with Yamibuy!</p>
+					</div>		
+					<!--mail info-->			
+					<div class="invi-cont">
+						<label>From</label>
+						<p>{$userInfo->email}</p>
+						<label for="to">To</label>
+						<input name="to" id="to" class="text-input" placeholder="Use comma to seperate multiple email addresses.">
+						<label for="msg">Message</label>
+						{if $isLogin == true}
+						<textarea id="msg" name="msg" class="text-input" readonly="readonly">I was shopping on Yamibuy.com and saw some things that you'll love. Check this thing: {$goods->Basic->ename}. Yamibuy is a one-stop shopping site for best Asian products, they have a great assortment of snacks, beauty, small appliance & more. And because I referred you, you’ll get 300 points ($3 off) your first order when you use my link.</textarea>
+						{else}
+						<textarea id="msg" name="msg" class="text-input" readonly="readonly">I was shopping on Yamibuy.com and saw some things that you'll love. Check this thing: {$goods->Basic->ename}. Yamibuy is a one-stop shopping site for best Asian products, they have a great assortment of snacks, beauty, small appliance & more.</textarea>
+						{/if}
+						<div class="action-btns">
+							<a href="javascript:;" class="btn-base no-btn" onClick="closePopup()">Cancel</a>
+							<a href="javascript:;" class="btn-base yes-btn" onClick="sendMail()">Send</a>
+						</div>
+					</div>
+					<!--mail info end-->
+				</div>
+			</div>
+		</div>
+		{include file='common/footer.dwt'}
+		</div>
+		{include file='common/top_cs.dwt'}
+        
+        {literal}
+        
+		<script src="js/jquery.raty.js"></script>
+		<script>
+			$(document).ready(function() {
+		    $.ajaxSetup({ cache: false });
+		    $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+		        FB.init({
+		            appId: '1815382415355586',
+		            version: 'v2.5'
+		        });
+		    });
+			});
+		</script>
+		<script>
+		function openPopup()
+			{
+				$.yamibuy.common.hideLoading();
+				$('.popup-mask').css('display', 'block');
+				$('html, body').css('overflow', 'hidden');
+			}
+
+			function closePopup()
+			{
+				$.yamibuy.common.hideLoading();
+				$('.popup-mask').css('display', 'none');
+				$('html, body').css('overflow', 'auto');
+			}
+			
+			function sendMail()
+			{
+				toMail = $("#to").val();
+				content = $("#msg").val();
+				act = "sendMail";
+				$.yamibuy.common.doAjax('goods.php',{act:act,toMail:toMail,content:content},
+			        function(data)
+			        {
+			            if(data.status == 1)
+			            {
+			                $.yamibuy.common.alert('Mail Sent Failed');
+			            }
+			            else
+			            {
+			            	$("#to").val("");
+			              closePopup(); 			              
+			              $.yamibuy.common.alert('Mail Sent');		                          
+			              
+			            }
+			        }
+			    );
+			}
+			
+			function inputZipcode(gid,in_stock)
+			{
+				$.yamibuy.common.zipcode("请输入您的邮编:", function(){
+					zipcode=$("#zipcode").val();
+					setZipcode(gid,zipcode,in_stock);
+				});
+			}
+			/*****驗證用戶是否輸入數字，非數字無法輸入*****/
+			function ValidateNumber(e, pnumber)
+			{
+			    if (!/^\d+$/.test(pnumber))
+			    {
+			        $(e).val(/^\d+/.exec($(e).val()));
+			    }
+			    return false;
+			}
+			function setZipcode(gid,zipcode,in_stock)
+			{
+				$.yamibuy.common.doAjax('service.php',{act:"checkZipcode", gid:gid, zipcode:zipcode},
+				function(data)
+				{
+					if(data.status == 1 )
+					{
+						$.yamibuy.common.alert(data.message);	
+					}					
+					else
+					{	
+						$("#setZipcode").show().html(zipcode);
+						$("#inputZipcode").empty().html('修改');
+						
+						if(data.object == 0)				
+						{
+							$("#notInArea").show();
+							$(".add-to-cart").addClass("disabled-prim-btn");
+							document.getElementById("btnText2").innerHTML = "不在配送范围";
+						}
+						else
+						{
+							$("#notInArea").hide();
+							
+							$("#btnText").hide();
+							$("#btnText2").show();
+							$(".add-to-cart").removeClass("disabled-prim-btn");
+							document.getElementById("btnText2").innerHTML = "<i class='fa fa-shopping-cart'></i>&nbsp;加入购物车";
+						}
+					}
+				},{showloading:false});				
+			}
+			
+		
+	    $('[id=score-callback-read]').raty({
+	            path: 'images',
+	            half: true,
+	            readOnly: true,
+	            score: function() {
+	            	return $(this).attr('data-score');
+			    }
+			});
+			
+			
+			$('[id=score-callback-write]').raty({
+	            path: 'images',
+	            half: true,
+	            readOnly: false,
+	            score: function() {
+	            	return $(this).attr('data-score');
+			    }
+			});
+			
+			
+			
+			var mainImage = $(".main-img");
+			$(".thumb-cont img").hover(function(){
+				$(".thumb-cont img").css("border-width", "0");
+				$(this).css("border", "1px solid #f25950");
+
+				var src = $(this).attr("src");
+				$(".main-img").attr("src",src);
+			});
+			
+			var files = null;
+			
+			$("#file").change(function(event){
+				
+				$(".uploaded-img-cont").hide();
+				
+				$(".uploaded-img").remove();
+
+				files = event.currentTarget.files;
+				
+				var fileNum = files.length;
+				
+				var img = "";
+				
+				//如果存在上传的文件
+				if(fileNum > 0)
+				{
+					for(var i=0; i<fileNum; i++)
+					{
+						var currentFile = files[i];	
+						
+						if(currentFile != undefined){
+						
+							var fileSize = currentFile.size;
+							if(fileSize > 2000000)
+							{
+								alert("Image size needs be smaller than 2M");	
+								$(this).val("");
+								$(".uploaded-img").remove();
+								return false;
+							}
+							var tmppath = URL.createObjectURL(currentFile);
+							
+							var img = img + '<div class="uploaded-img"><img index='+i+' id=img_'+i+' src='+tmppath+' width=50 height=50><a class="fvpp-close">&#10005;</a></div>';
+						}
+					}	
+					
+					
+					$(".uploaded-img-cont").append(img);
+				
+					$("#submit-img").attr("disabled", false);
+					
+					$("#img-form" ).submit(function( event ) {
+						event.preventDefault();
+						var formData = new FormData();
+						formData.append("act", "upload");
+				        $.each($('#file')[0].files, function(i, file) {
+				            formData.append('file-'+i, file);
+				        });
+		
+				        
+				        $.ajax({
+							url: "service.php",
+							data: formData,
+							datatype: "POST",
+							enctype: "multipart/form-data",
+							contentType: false,
+							processData: false,
+							cache: false,
+							success: function (data, textStatus, xhr) {
+								alert("success");
+							}
+						});
+					});
+					$("#submit-img").click(function(){
+						
+						/*var formData = new FormData($("#img-form").serialize());
+						
+						$.ajax({
+							url: "service.php",
+							data: formData,
+							datatype: "POST",
+							enctype: "multipart/form-data",
+							success: function (data, textStatus, xhr) {
+								alert("success");
+							}
+						});
+						
+						$.yamibuy.common.doAjax("service.php", {act : "upload",test : $(formData)}
+						 ,function(){
+							 
+						},{type:"POST", enctype: "multipart/form-data"})
+						
+						$(".uploaded-img-cont").show();	
+						$(this).attr("disabled", true)*/;
+					});
+					
+				}
+				//如果不存在上传的文件
+				else
+				{
+					$(".uploaded-img").remove();
+					$(".uploaded-img-cont").hide();
+					$("#file").val("");	
+					$("#submit-img").attr("disabled", true);
+				}
+
+			});
+			
+			//删掉某个图片动作
+			$('body').delegate('.fvpp-close','click',function(){
+				$(this).parents(".uploaded-img").remove();
+				var index = $(this).siblings('img').attr("index");	
+			});
+			
+			//点击提交评论
+			$("#comment-submit").click(function(){
+				
+					//获取消息框内容
+					var msg = jQuery.trim($("textarea[name=msg]").val());
+					
+					//获取昵称
+					var nickname = jQuery.trim($("input[name=nickname]").val());
+					
+					//获取商品评分
+					var score = $("#score-callback-write input[name=score]").val();
+					
+					//获取商品id
+					var gid = $("input[name=gid]").val();
+					
+					if(!score)
+					{
+						$.yamibuy.common.alert("Please enter a review");
+							
+						return false;
+					}
+					
+					//如果检查输入都合法 则执行ajax
+					if(checkInputContent(msg, nickname))
+					{
+						$.yamibuy.common.showLoading();
+						$.yamibuy.common.doAjax(
+		
+							'goods.php',
+							
+							{
+								act:"add_item_comment", 
+								nickname:nickname, 
+								content:msg, 
+								gid:$("input[name=gid]").val(),
+								score:score
+							},
+							
+							function(data){
+								//执行失败
+								if(data.status == 1)
+								{
+									
+									$.yamibuy.common.alert(data.message);	
+								}
+								//执行成功
+								else if(data.status == 0)
+								{
+									window.location.href="goods.php?id="+gid;
+								}
+								else
+								{
+									$.yamibuy.common.alert(data.status);	
+								}
+							},
+							
+							
+							{showloading:false}
+						);
+					}
+					
+					
+			});
+			
+			//检查输入是否合法
+			function checkInputContent(msg, nickname)
+			{
+				if(msg == "")
+				{
+					$.yamibuy.common.alert("Please enter a review");
+					
+					return false;
+				}
+				if(nickname == "")
+				{
+					$.yamibuy.common.alert("Please enter a nickname");	
+					return false;
+				}
+				
+				if(strLength(nickname) > 16)
+				{
+					$.yamibuy.common.alert("nickname can not exceed 16 characters or 8 Chinese characters");
+					return false;
+				}
+				return true;
+			}
+			
+			//获取字符串的长度 汉字算两个字符
+			function strLength(str)
+			{
+				return str.replace(/[^\x00-\xff]/g,"**").length;
+			}
+
+			function oos_remind_me(gid)
+			{
+			
+				$.yamibuy.user.displaySignIn({method : function(){
+					
+					$.yamibuy.common.doAjax(
+	
+						'goods.php',
+						
+						{
+							act:"add_remind", 
+							gid:gid
+						},
+						
+						function(data){
+							//执行失败
+							if(data.status == 1)
+							{
+								$.yamibuy.common.alert(data.message);	
+							}
+							//执行成功
+							else if(data.status == 0)
+							{
+								//$.yamibuy.common.showLoading();
+								window.location.href="goods.php?id="+gid;
+							}
+							else
+							{
+								$.yamibuy.common.alert(data.status);	
+							}
+						},
+						
+						
+						{showloading:false}
+					);
+				}});
+				
+			}
+			
+			function shareFb(gid,invite_code)
+			{
+				if(invite_code != "")
+				{
+					var invite_code = "&invite_code="+invite_code;
+					
+					FB.ui({
+			        method: 'share',
+			        href: 'http://www.yamibuy.com/en/goods.php?id='+gid+invite_code,
+			    }, function(response){});
+				}
+				else
+				{
+					FB.ui({
+			        method: 'share',
+			        href: 'http://www.yamibuy.com/en/goods.php?id='+gid,
+			    }, function(response){});
+				}
+			    
+			}
+			
+			
+			
+	    </script>
+        
+        {/literal}
+</body>
+
+</html>

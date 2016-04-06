@@ -1,0 +1,234 @@
+	<h1 id="sitename" style="position: fixed; top: 0; left: 0; z-index: -1; display: none;">亚米yamibuy</h1>
+	<div class="header cf">
+		<div class="nav-customer cf">
+			<div class="wrapper">
+				<p class="welcome">Hi {$common->getAccountInfo()->username}，Welcome to Yamibuy !</p>
+				<ul class="nav-customer-list">
+					{if $common->isLogin()}
+						<li class="user-account">
+							<a href="my-orders.php"><i class="fa fa-user"></i>Account<i class="fa fa-caret-down"></i></a>
+							<div class="extend-menu user">
+								<ul>
+									<li>
+										<a href="my-orders.php">My Orders</a>
+										</li>
+									<li>
+										<a href="my-info.php">My Account</a>
+										</li>
+									<li>
+										<a href="my-messages.php">My Messages</a>
+									</li>
+									<li>
+										<a href="javascript:$.yamibuy.user.signOut();">Sign Out</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					{else}
+						<li><a href="login.php"><i class="fa fa-user"></i>Sign In / Register</a></li>
+					{/if}			
+					<li><a href="my-orders.php"><i class="fa fa-cube"></i>My Orders</a></li>
+					<li><a href="my-saves.php"><i class="fa fa-heart"></i>Love List</a></li>
+					<li class="mobile-qr">
+						<a href=""><i class="fa fa-mobile"></i>Yamibuy App<i class="fa fa-caret-down"></i></a>
+						<div class="extend-menu qr">
+							<img src="images/qr-dummy.png" width="100">
+						</div>
+					</li>
+					<li><a href="faq.php"><i class="fa fa-question-circle"></i>Help</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="burger cf">
+			<div class="wrapper">
+				<div class="logo">
+					<a href="index.php"><img id="yami-logo" src="http://cdn.yamibuy.com/images/en/index/logo_bd3.png" width="200"></a>
+					<!-- <img id="yami-slogan" src="images/logo-slogan.gif" width="84"> -->
+				</div>
+				<div class="search-cont cf">
+					{assign var="advertisement" value=$common->getAdvertisement()}
+					<input class="search-bar" data-name="txtSearch" name="keywords" type="text" placeholder="{$advertisement->eplaceholder}" value="{$smarty.request.keywords}">
+					<button id="search-btn" type="button" class="search-btn" data-url="{if $advertisement->type eq 0}{$advertisement->url}{elseif $advertisement->type eq 1}goods.php?id={$advertisement->value}{elseif $advertisement->type eq 2}brand.php?id={$advertisement->value}{elseif $advertisement->type eq 3}category.php?id={$advertisement->value}{elseif $advertisement->type eq 4}search.php?keywords={$advertisement->search}{/if}"><i class="fa fa-search"></i></button>
+					{assign var="suggestions" value=$common->getSearchSuggestion()}
+				</div>
+				<div class="cart-cont">
+					<div id="target" class="cont-wrap">
+						<a href="javascript:;" class="cart-btn" style="display: block; line-height: 2.4em;"><i class="fa fa-shopping-cart"></i>Cart<span class="amount">0</span></a>
+						
+						<div class="cart-content">
+							<div class="cart-not-empty" >							
+								<div style="height: 300px;"></div>
+							</div>										
+						</div>												
+					</div>
+
+				</div>
+				<a class="en-switch" href="{$common->getLanguageUrl()}">中文</a>
+				</div>
+			</div>
+			{assign var="categories" value=$common->getCategories()}
+		
+			<div class="nav-main-1">
+				<div class="wrapper">
+					<div class="all-cats">All Categories</div>
+					<div class="drop-cats-cont">
+					{foreach from=$categories key=index item=category}
+						<div class="cont-wrap cf">
+							<div class="cat-cont {if $index==0}food{elseif $index==1}beauty{elseif $index==2}health{elseif $index==3}appliances{/if}">
+								<h2 class="cat">{$category->cat_ename}</h2>
+								<ul class="sub-cats">
+								{if $index == 1 || $index == 2}
+									{foreach from=$category->children key=sub_index item=sub_category}
+										{if $sub_index%2 == 0 }
+											<li>
+										{/if}
+										{if $sub_category->cat_id != 31}
+										<a href="category.php?id={$sub_category->cat_id}" target="_blank">{$sub_category->cat_ename}</a>
+										{/if}
+										{if $sub_index%2 == 1 || $smarty.foreach.sub_category.last}
+											</li>
+										{/if}										
+									{/foreach}
+								{else}
+									{foreach from=$category->children item=sub_category}
+									<li><a href="category.php?id={$sub_category->cat_id}" target="_blank">{$sub_category->cat_ename}</a></li>	
+									{/foreach}
+								{/if}
+								</ul>
+							</div>
+							<div class="sub-cat-cont {if $index==0}food{elseif $index==1}beauty{elseif $index==2}health{elseif $index==3}appliances{/if}">
+								<div class="width-fix">
+									<div class="cat-width">
+										{foreach from=$category->children item=sub_category}
+										<div class="sub-cat-group">
+											<p class="sub-cat"><a href="category.php?id={$sub_category->cat_id}">{$sub_category->cat_ename}</a></p>
+											<ul>
+												{foreach from=$sub_category->children item=sub_sub_category}
+												<li><a href="category.php?id={$sub_sub_category->cat_id}" target="_blank">{$sub_sub_category->cat_ename}</a></li>
+												{/foreach}
+											</ul>
+										</div>
+										{/foreach}
+									</div>
+									{if $index==0}
+									<div class="portal">
+										<p class="so">Yum yum...</p>
+										<p class="capt">Explore global food</p>
+										<a class="entrance" href="snack.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{elseif $index==1}
+									<div class="portal">
+										<p class="so">Beauty is here</p>
+										<p class="capt">Summer time collection</p>
+										<a class="entrance" href="beauty.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>							
+									{elseif $index==2}
+									<div class="portal">
+										<p class="so">Healthy life</p>
+										<p class="capt">Traditional nutritions</p>
+										<a class="entrance" href="health.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{elseif $index==3}
+									<div class="portal">
+										<p class="so">Let's renovate</p>
+										<p class="capt">Tools and suppleis for home</p>
+										<a class="entrance" href="life.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{/if}		
+								</div>
+							</div>
+						</div>
+					{/foreach}						
+					</div>
+					<ul class="cats">
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'snack.php')} class='selected' {/if}><h2><a href="snack.php">Snack</a></h2></li>
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'beauty.php')} class='selected' {/if}><h2><a href="beauty.php">Beauty</a></h2></li>
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'life.php')} class='selected' {/if}><h2><a href="life.php">Life</a></h2></li>
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'health.php')} class='selected' {/if}><h2><a href="health.php">Health</a></h2></li>
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'new-arrival.php')} class='selected' {/if}><h2><a href="new-arrival.php">New Arrivals</a></h2></li>
+						<li {if $common->strEndWith($smarty.server.SCRIPT_NAME, 'sale.php')} class='selected' {/if}><h2><a href="sale.php">sale</a></h2></li>
+					</ul>
+					<p class="fs"><i class="fa fa-truck"></i>Free Shipping on $49+ Orders</p>
+				</div>
+			</div>
+			<div class="nav-main-2">
+				<div class="wrapper">
+				<div class="cont-wrap">
+					<div class="all-cats">All Categories<i class="fa fa-caret-square-o-down"></i></div>
+					<div class="drop-cats-cont">
+					{foreach from=$categories key=index item=category}
+						<div class="cont-wrap cf">
+							<div class="cat-cont {if $index==0}food{elseif $index==1}beauty{elseif $index==2}health{elseif $index==3}appliances{/if}">
+								<p class="cat">{$category->cat_ename}</p>
+								<ul class="sub-cats">
+								{if $index == 1 || $index == 2}
+									{foreach from=$category->children key=sub_index item=sub_category}
+										{if $sub_index%2 == 0 }
+											<li>
+										{/if}
+										{if $sub_category->cat_id != 31}
+										<a href="category.php?id={$sub_category->cat_id}" target="_blank">{$sub_category->cat_ename}</a>
+										{/if}
+										{if $sub_index%2 == 1 || $smarty.foreach.sub_category.last}
+											</li>
+										{/if}										
+									{/foreach}
+								{else}
+									{foreach from=$category->children item=sub_category}
+									<li><a href="category.php?id={$sub_category->cat_id}" target="_blank">{$sub_category->cat_ename}</a></li>	
+									{/foreach}
+								{/if}							
+								</ul>
+							</div>
+							<div class="sub-cat-cont {if $index==0}food{elseif $index==1}beauty{elseif $index==2}health{elseif $index==3}appliances{/if}">
+								<div class="width-fix">
+									<div class="cat-width">
+										{foreach from=$category->children item=sub_category}
+										<div class="sub-cat-group">
+											<p class="sub-cat"><a href="category.php?id={$sub_category->cat_id}">{$sub_category->cat_ename}</a></p>
+											<ul>
+												{foreach from=$sub_category->children item=sub_sub_category}
+												<li><a href="category.php?id={$sub_sub_category->cat_id}" target="_blank">{$sub_sub_category->cat_ename}</a></li>
+												{/foreach}
+											</ul>
+										</div>
+										{/foreach}
+									</div>
+									{if $index==0}
+									<div class="portal">
+										<p class="so">Yum yum...</p>
+										<p class="capt">Explore global food</p>
+										<a class="entrance" href="snack.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{elseif $index==1}
+									<div class="portal">
+										<p class="so">Beauty is here</p>
+										<p class="capt">Summer time collection</p>
+										<a class="entrance" href="beauty.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>							
+									{elseif $index==2}
+									<div class="portal">
+										<p class="so">Healthy life</p>
+										<p class="capt">Traditional nutritions</p>
+										<a class="entrance" href="health.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{elseif $index==3}
+									<div class="portal">
+										<p class="so">Let's renovate</p>
+										<p class="capt">Tools and suppleis for home</p>
+										<a class="entrance" href="life.php">Shop now<i class="fa fa-angle-right"></i></a>
+									</div>
+									{/if}	
+								</div>
+							</div>
+						</div>
+					{/foreach}						
+					</div>
+					
+					</div>
+					<a href="index.php"><img class="nav-2-logo" src="images/logo-en.png" width="120"></a>
+					<p class="fs"><i class="fa fa-truck"></i>Free Shipping $49+</p>
+				
+				</div>
+			</div>
+		</div>
