@@ -1,10 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>美国亚米网 - 生活在北美，购物到亚米</title>
-	<meta name="Keywords" content="美国,亚米网,华人,网上,华人超市,在线超市,网上中国超市,中国零食,日本零食,亚洲零食,健康零食,中国商品,网购,亚洲商品,中国食品,亚洲食品,日韩美妆,护肤保养">
-	<meta name="description" content="美国亚米网-美国最大最全的亚洲购物网站，为你提供最全最健康的中国及亚洲零食及美妆产品，让你足不出户也能享受家的便利。最全最好的商品，最优最有保障的网购体验。">
+	<title>Yamibuy.com: One-stop shop for Asian brands.</title>
+	<meta name="keywords" content="Yamibuy.com, Yamibuy, online shopping, Asian, food, beauty, appliances, health, collectibles, baby products, bedding, bath, accessories, toys, personal care">
+	<meta name="description" content="Yamibuy.com is the largest online shop for Asian food, beauty, tools and houseware, and health products in the United States. The biggest selection of Asian products you can find.">
 	{include file='common/head.dwt'}
 </head>
 
@@ -22,7 +22,7 @@
 							{foreach from=$home->home->slides item=slide}
                             	<div class="ms-slide" data-bgcolor="{$slide->bgcolor}">
 
-                                    <img src="http://cdn.yamibuy.com/cn/plugins/masterslider/style/blank.gif" data-src="{$slide->image}"/>      
+                                    <img src="http://cdn.yamibuy.com/en/plugins/masterslider/style/blank.gif" data-src="{$slide->eimage}"/>      
                                     
                                     {if $slide->type eq 0}
                                     <!--
@@ -36,7 +36,7 @@
                                     {if $slide->type eq 1}
                                     <!--
                                         <div class="ms-layer ms-caption" data-effect="back(200|800)" data-duration="1800" data-delay="0"  style="top:130px; left:300px;">
-                                            <p class="p-title">{$slide->basic->name}</p>
+                                            <p class="p-title">{$slide->basic->ename}</p>
                                             <p class="p-des">商品描述需要加服务</p>
                                             <p class="p-price">{$slide->basic->shop_price}</p>
                                         </div>
@@ -82,63 +82,65 @@
 					</div>
 				</div>
 				<div class="flash-sale">
-					<p class="timer">折扣倒计时: <span data-countdown="{$home->home->flashItem->expiry}"></span></p>
+					<p class="timer">Ends in <span data-countdown="{$home->home->flashItem->expiry}"></span></p>
 					<div class="item-cont">
 						<a href="goods.php?id={$home->home->flashItem->gid}">
 							<img src="{$home->home->flashItem->basic->image}" width="140">
-							<p class="order-limit"> {((($home->home->flashItem->basic->promote_price) / ($home->home->flashItem->basic->shop_price))|round:2) * 10 }折  {if $home->home->flashItem->basic->limitedQuantity neq 0}&nbsp;|&nbsp;<span>限购{$home->home->flashItem->basic->limitedQuantity}/单</span>{/if}</p>
+							<p class="order-limit" style="font-size:12px"> {((1-($home->home->flashItem->basic->promote_price) / ($home->home->flashItem->basic->shop_price))|round:2) * 100 }% OFF  {if $home->home->flashItem->basic->limitedQuantity neq 0}&nbsp;|&nbsp;<span>Limit{$home->home->flashItem->basic->limitedQuantity}/Order</span>{/if}</p>
 							<div class="item-detail">
-								<p class="des">{$home->home->flashItem->basic->name}</p>
+								<p class="des">{$home->home->flashItem->basic->ename}</p>
 								<p class="price"><span class="curr">${$home->home->flashItem->basic->promote_price}</span><span class="orig">${$home->home->flashItem->basic->shop_price}</span></p>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div class="p1-promo">
-				  <a href="" target="_blank">
-
+				  <a href="http://promo.yamibuy.com/anniversary/en/yc.html" target="_blank">
+				  	<!--
+				  	<img style="position: absolute; top: 0;" src="http://cdn.yamibuy.com/images/en/activity/bd3/bd3_indx_en.jpg">
+					--> 
 				    <img style="position: absolute; top: 0;" src="http://cdn.yamibuy.com/images/cn/index/appdown.jpg">
 				    
-				    <div class="p1-qr" style="width: 100%; height: 135px; background-color: rgba(0,0,0,.6); position: absolute; top: 0;">
-				    	<img class="app-qr" style="margin: 20px auto 0; display: block;" src="http://cdn.yamibuy.com/images/cn/index/qr.png" width="100">
+				    <div class="p1-qr" style="width: 100%; height: 135px; background-color: rgba(0,0,0,.6); position: absolute; top: 0;"> 	
+				    	<img class="app-qr" style="margin: 20px auto 0; display: block;" src="http://cdn.yamibuy.com/images/en/index/qr.png" width="100">
 				    </div>
-					
-				  </a>  	
+				      
+				  </a> 	
 				</div>
 			</div>
 		</div>
 	
 		<div class="promo-bar">
-        
+		<!--
 			 <div class="wrapper">
 			   <a href="http://promo.yamibuy.com/anniversary/en/index.html" target="_blank">	
-				<img src="http://cdn.yamibuy.com/images/cn/activity/bd3/FloatingBar_bd3.png" width="1200">
+				<img src="http://cdn.yamibuy.com/images/en/activity/bd3/FloatingBar_bd3_2_en.png" width="1200">
 			   </a>
 			</div>
-        
+		-->			
 		</div>
-	
+		
 		<div class="promo-group cf">
 			<div class="wrapper">
 				<div class="left_two">
-				 <a href="brand.php?id=1847" target="_blank">
-				  <img src="http://cdn.yamibuy.com/images/cn/index/a_indx_57.jpg" width="386">
+				 <a href="brand.php?id=738" target="_blank">
+				  <img src="http://cdn.yamibuy.com/images/en/index/a_indx_63_en.jpg" width="386">
 				 </a>
-				 <a href="stack.php?regular=90" target="_blank">
-				  <img src="http://cdn.yamibuy.com/images/cn/index/a_indx_58.jpg" width="386" class="btm-img">
+				 <a href="brand.php?id=58" target="_blank">
+				  <img src="http://cdn.yamibuy.com/images/en/index/a_indx_64_en.jpg" width="386" class="btm-img">
 				 </a> 
 				</div>
 				<div class="mid_one">
-				 <a href="brand.php?id=1253" target="_blank">	
-				  <img src="http://cdn.yamibuy.com/images/cn/index/a_indx_59.jpg" width="386">
+				 <a href="stack.php?regular=94" target="_blank">	
+				  <img src="http://cdn.yamibuy.com/images/en/index/a_indx_65_en.jpg" width="386">
 				 </a> 
 				</div>
 				<div class="right_two">
-				 <a href="brand.php?id=1214" target="_blank">
-				  <img src="http://cdn.yamibuy.com/images/cn/index/a_indx_60.jpg" width="386">
+				 <a href="brand.php?id=803" target="_blank">
+				  <img src="http://cdn.yamibuy.com/images/en/index/a_indx_66_en.jpg" width="386">
 				 </a>
-				 <a href="stack.php?regular=91" target="_blank"> 
-				  <img src="http://cdn.yamibuy.com/images/cn/index/a_indx_61.jpg" width="386" class="btm-img">
+				 <a href="brand.php?id=975" target="_blank"> 
+				  <img src="http://cdn.yamibuy.com/images/en/index/a_indx_67_en.jpg" width="386" class="btm-img">
 				 </a> 
 				</div>
 			</div>
@@ -146,7 +148,7 @@
 		<div class="sec new-group cf">
 			<div class="wrapper">
 				<div class="sec-header">
-					<p class="title">新品上市<a class="cmore" href="new-arrival.php">查看更多<i class="fa fa-angle-right"></i></a></p>
+					<p class="title">NEW ARRIVALS<a class="cmore" href="new-arrival.php">See More<i class="fa fa-angle-right"></i></a></p>
 				</div>
 				<div class="box-cont">
 
@@ -154,15 +156,15 @@
 					
 					{foreach from=$home->home->newItems item=newItem key=k}
 					
-						{if $i eq 2 }					
+						{if $i eq 2 }
 							<div class="lg-box">
-							 <a href="stack.php?regular=92" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/b_rec_indx_188.jpg" width="400">
+							 <a href="brand.php?id=1500" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/b_rec_indx_1500_en.jpg" width="400">
 							 </a> 
 							</div>
 							<div class="lg-box">
-							 <a href="stack.php?regular=93" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/b_rec_indx_1404.jpg" width="400">
+							 <a href="stack.php?regular=96" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/b_rec_indx_1511_2_en.jpg" width="400">
 							 </a>
 							</div>
 						{/if}
@@ -171,8 +173,8 @@
 							<a href="goods.php?id={$newItem->gid}" target="_blank">
 									<img src="{$newItem->basic->image}" width="160">
 									<div class="item-detail">
-										<p class="des">{$newItem->basic->name}</p>
-										<p class="price">${$newItem->basic->shop_price}</p>
+										<p class="des">{$newItem->basic->ename}</p>
+										<p class="price">${if $newItem->basic->is_promote eq 1}{$newItem->basic->promote_price}{else}{$newItem->basic->shop_price}{/if}</p>
 									</div>
 							</a>
 						</div>
@@ -185,7 +187,7 @@
 		</div>
 		<div class="popular-group cf">
 			<div class="wrapper">
-				<p class="title">热销商品</p>
+				<p class="title">POPULAR</p>
 				<div class="caro-cont">
 					<a class="jcarousel-prev"></a>
 					<a class="jcarousel-next"></a>           
@@ -198,8 +200,8 @@
 									<a href="goods.php?id={$hot->gid}">
 										<img src="{$hot->Basic->image}" width="160">
 										<div class="item-detail">
-											<p class="des">{$hot->Basic->name}</p>
-											<p class="price">${$hot->Basic->shop_price}</p>
+											<p class="des">{$hot->Basic->ename}</p>
+											<p class="price">${if $hot->Basic->is_promote eq 1}{$hot->Basic->promote_price}{else}{$hot->Basic->shop_price}{/if}</p>
 										</div>
 										</a>
 									</div>                
@@ -222,11 +224,11 @@
 					{if $k eq 0}	
 				
 						<div class="sec-header">
-							<p class="title">零食 饮料 干货<a class="cmore" href="category.php?id=1">查看更多<i class="fa fa-angle-right"></i></a>	</p>
+							<p class="title">SNACKS<a class="cmore" href="category.php?id=1">See More<i class="fa fa-angle-right"></i></a>	</p>
 							<div class="keywords-cont">
 								
 								{foreach from=$cat->keywords item=keyword}
-									<a class="keywords" href="search.php?keywords={$keyword->key_name}">{$keyword->key_name}</a>
+									<a class="keywords" href="search.php?keywords={$keyword->key_ename}">{$keyword->key_ename}</a>
 								{/foreach}
 								
 							</div>
@@ -235,27 +237,27 @@
 						<div class="box-cont">
 							<div class="lg-box tall">
 							 <a href="brand.php?id=162" target="_blank">	
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b162_2.jpg" width="400">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b162_2_en.jpg" width="400">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=1624" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b1624.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1624_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=170" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b170.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b170_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=96" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b96_2.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b96_2_en.jpg" width="200">
 							 </a>
 							</div>		
 							<div class="sm-box tall rb">
 							 <a href="brand.php?id=593" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b104.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b104_en.jpg" width="200">
 							 </a>
 							</div>
 							
@@ -264,8 +266,8 @@
 									<a href="goods.php?id={$catnewitem->gid}">
 										<img src="{$catnewitem->basic->image}" width="160">
 										<div class="item-detail">
-											<p class="des">{$catnewitem->basic->name}</p>
-											<p class="price">${$catnewitem->basic->shop_price}</p>
+											<p class="des">{$catnewitem->basic->ename}</p>
+											<p class="price">${if $catnewitem->basic->is_promote eq 1}{$catnewitem->basic->promote_price}{else}{$catnewitem->basic->shop_price}{/if}</p>
 										</div>
 									</a>
 								</div>
@@ -277,11 +279,11 @@
 					{if $k eq 1}	
 				
 						<div class="sec-header">
-							<p class="title">美容 美妆 保养<a class="cmore" href="category.php?id=2">查看更多<i class="fa fa-angle-right"></i></a>	</p>
+							<p class="title">BEAUTY<a class="cmore" href="category.php?id=2">See More<i class="fa fa-angle-right"></i></a>	</p>
 							<div class="keywords-cont">
 								
 								{foreach from=$cat->keywords item=keyword}
-									<a class="keywords" href="search.php?keywords={$keyword->key_name}">{$keyword->key_name}</a>
+									<a class="keywords" href="search.php?keywords={$keyword->key_ename}">{$keyword->key_ename}</a>
 								{/foreach}
 								
 							</div>
@@ -290,27 +292,27 @@
 						<div class="box-cont">
 							<div class="lg-box tall">
 							 <a href="brand.php?id=194" target="_blank">	
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b194.jpg" width="400">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b194_en.jpg" width="400">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=537" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b537_2.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b537_2_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=377" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b377.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b377_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=238" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b238.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b238_en.jpg" width="200">
 							 </a>							</div>
 		
 							<div class="sm-box tall rb">
 							 <a href="brand.php?id=277" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b277.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b277_en.jpg" width="200">
 							 </a>
 							</div>
 							
@@ -319,8 +321,8 @@
 									<a href="goods.php?id={$catnewitem->gid}">
 										<img src="{$catnewitem->basic->image}" width="160">
 										<div class="item-detail">
-											<p class="des">{$catnewitem->basic->name}</p>
-											<p class="price">${$catnewitem->basic->shop_price}</p>
+											<p class="des">{$catnewitem->basic->ename}</p>
+											<p class="price">${if $catnewitem->basic->is_promote eq 1}{$catnewitem->basic->promote_price}{else}{$catnewitem->basic->shop_price}{/if}</p>
 										</div>
 									</a>
 								</div>
@@ -333,11 +335,11 @@
 					{if $k eq 2}	
 				
 						<div class="sec-header">
-							<p class="title">保健 塑身 医药<a class="cmore" href="category.php?id=7">查看更多<i class="fa fa-angle-right"></i></a>	</p>
+							<p class="title">HEALTH<a class="cmore" href="category.php?id=7">See More<i class="fa fa-angle-right"></i></a>	</p>
 							<div class="keywords-cont">
 								
 								{foreach from=$cat->keywords item=keyword}
-									<a class="keywords" href="search.php?keywords={$keyword->key_name}">{$keyword->key_name}</a>
+									<a class="keywords" href="search.php?keywords={$keyword->key_ename}">{$keyword->key_ename}</a>
 								{/foreach}
 								
 							</div>
@@ -346,27 +348,27 @@
 						<div class="box-cont">
 							<div class="lg-box tall">
 							 <a href="brand.php?id=603" target="_blank">	
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b603_2.jpg" width="400">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b603_2_en.jpg" width="400">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=503" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b503.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b503_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=290" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b290.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b290_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=219" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_g219.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_g219_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall rb">
 							 <a href="brand.php?id=603" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b603.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b603_en.jpg" width="200">
 							 </a>
 							</div>
 							
@@ -375,8 +377,8 @@
 									<a href="goods.php?id={$catnewitem->gid}">
 										<img src="{$catnewitem->basic->image}" width="160">
 										<div class="item-detail">
-											<p class="des">{$catnewitem->basic->name}</p>
-											<p class="price">${$catnewitem->basic->shop_price}</p>
+											<p class="des">{$catnewitem->basic->ename}</p>
+											<p class="price">${if $catnewitem->basic->is_promote eq 1}{$catnewitem->basic->promote_price}{else}{$catnewitem->basic->shop_price}{/if}</p>
 										</div>
 									</a>
 								</div>
@@ -390,11 +392,11 @@
 					{if $k eq 3}	
 				
 						<div class="sec-header">
-							<p class="title">电器 日用 家居<a class="cmore" href="category.php?id=10">查看更多<i class="fa fa-angle-right"></i></a>	</p>
+							<p class="title">HOME<a class="cmore" href="category.php?id=10">See More<i class="fa fa-angle-right"></i></a>	</p>
 							<div class="keywords-cont">
 								
 								{foreach from=$cat->keywords item=keyword}
-									<a class="keywords" href="search.php?keywords={$keyword->key_name}">{$keyword->key_name}</a>
+									<a class="keywords" href="search.php?keywords={$keyword->key_ename}">{$keyword->key_ename}</a>
 								{/foreach}
 								
 							</div>
@@ -403,27 +405,27 @@
 						<div class="box-cont">
 							<div class="lg-box tall">
 							 <a href="brand.php?id=727" target="_blank">	
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b727.jpg" width="400">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b727_en.jpg" width="400">
 							 </a>	
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=1597" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b1597.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1597_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
-							 <a href="goods.php?id=9338" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_g9338.jpg" width="200">
+							 <a href="brand.php?id=1779" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1779_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
 							 <a href="brand.php?id=1247" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b1247.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1247_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall rb">
 							 <a href="brand.php?id=1151" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/cn/index/g_indx_b1151.jpg" width="200">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1151_en.jpg" width="200">
 							 </a>
 							</div>
 							
@@ -432,8 +434,8 @@
 									<a href="goods.php?id={$catnewitem->gid}">
 										<img src="{$catnewitem->basic->image}" width="160">
 										<div class="item-detail">
-											<p class="des">{$catnewitem->basic->name}</p>
-											<p class="price">${$catnewitem->basic->shop_price}</p>
+											<p class="des">{$catnewitem->basic->ename}</p>
+											<p class="price">${if $catnewitem->basic->is_promote eq 1}{$catnewitem->basic->promote_price}{else}{$catnewitem->basic->shop_price}{/if}</p>
 										</div>
 									</a>
 								</div>

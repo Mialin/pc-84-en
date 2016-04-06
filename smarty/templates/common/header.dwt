@@ -42,7 +42,7 @@
 		<div class="burger cf">
 			<div class="wrapper">
 				<div class="logo">
-					<a href="index.php"><img id="yami-logo" src="http://cdn.yamibuy.com/images/en/index/logo_bd3.png" width="200"></a>
+					<a href="index.php"><img id="yami-logo" src="http://cdn.yamibuy.com/images/en/index/logo1_en.png" width="200"></a>
 					<!-- <img id="yami-slogan" src="images/logo-slogan.gif" width="84"> -->
 				</div>
 				<div class="search-cont cf">

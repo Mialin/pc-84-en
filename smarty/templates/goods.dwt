@@ -142,14 +142,14 @@
 						</tr>
 						{if $goods->Basic->is_district == 1}
 						<tr>
-							<td>配送至</td>
+							<td>Deliver to</td>
 							<td>
 								{if $zipcode == ""}								
 								<p id="setZipcode" style="display:none;"></p>
-								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">查看是否适用你的区域</a>
+								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">Check your zipcode</a>
 								{else}
 								<p id="setZipcode">{$zipcode}</p>
-								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">修改</a>
+								<a id="inputZipcode" class="go-to-comment" href="javascript:;" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})">Edit</a>
 								{/if}
 							</td>
 						</tr>
@@ -158,10 +158,10 @@
 					<div class="action-btns">
 						<a href="javascript:;" data-name="btnAddedFavorites" data-gid="{$goods->gid}" class="add-to-fav"><i class="fa fa-heart" style="color: #f25950;"></i>&nbsp;Favorite It</a>
 						<div class="ld-cont cf">
-							<div id="notInArea" style="display:none;"><tr>此商品只配送特定区域喔!</tr></div>							
+							<div id="notInArea" style="display:none;"><tr>This item can only be delivered to specific area</tr></div>							
 							{if $goods->Basic->is_district == 1}
-							<a href="javascript:;" id="btnText" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}style="display:none"{/if}>{if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;加入购物车{else}已售完{/if}</a>
-							<a href="javascript:;" id="btnText2" data-name="btnAddToCart" data-for="#item-quant-{$goods->gid}" data-gid="{$goods->gid}" data-vid="{$goods->vendor->vendor_id}" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1 || $is_local == 0}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}{else}style="display:none"{/if}>{if $is_local == 0} 不在配送范围 {else if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;加入购物车{else}已售完{/if}</a>
+							<a href="javascript:;" id="btnText" onClick="inputZipcode({$goods->gid},{$goods->Detail->in_stock})" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}style="display:none"{/if}>{if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;Add TO Cart{else}Sold Out{/if}</a>
+							<a href="javascript:;" id="btnText2" data-name="btnAddToCart" data-for="#item-quant-{$goods->gid}" data-gid="{$goods->gid}" data-vid="{$goods->vendor->vendor_id}" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1 || $is_local == 0}disabled-prim-btn{/if}" {if $zipcode != "" && $goods->Basic->is_district == 1}{else}style="display:none"{/if}>{if $is_local == 0} Invalid Zipcode{else if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;Add TO Cart{else}Sold Out{/if}</a>
 							{else}							
 							<a href="javascript:;" data-name="btnAddToCart" data-for="#item-quant-{$goods->gid}" data-gid="{$goods->gid}" data-vid="{$goods->vendor->vendor_id}" class="add-to-cart {if $goods->Detail->in_stock eq 0 or $goods->Basic->is_gift eq 1}disabled-prim-btn{/if}">{if $goods->Detail->in_stock eq 1}<i class="fa fa-shopping-cart"></i>&nbsp;Add To Cart{else}Sold Out{/if}</a>
 							{/if}
@@ -438,9 +438,16 @@
 			
 			function inputZipcode(gid,in_stock)
 			{
-				$.yamibuy.common.zipcode("请输入您的邮编:", function(){
+				$.yamibuy.common.zipcode("Please enter your zipcode:", function(){
 					zipcode=$("#zipcode").val();
-					setZipcode(gid,zipcode,in_stock);
+					if(zipcode != "")
+					{
+						setZipcode(gid,zipcode,in_stock);
+					}
+					else
+					{
+						$("#zipErr").empty().html('Please input your zipcode');
+					}
 				});
 			}
 			/*****驗證用戶是否輸入數字，非數字無法輸入*****/
@@ -464,13 +471,13 @@
 					else
 					{	
 						$("#setZipcode").show().html(zipcode);
-						$("#inputZipcode").empty().html('修改');
+						$("#inputZipcode").empty().html('Edit');
 						
 						if(data.object == 0)				
 						{
 							$("#notInArea").show();
 							$(".add-to-cart").addClass("disabled-prim-btn");
-							document.getElementById("btnText2").innerHTML = "不在配送范围";
+							document.getElementById("btnText2").innerHTML = "This item can't be delivered to your area";
 						}
 						else
 						{
@@ -479,7 +486,7 @@
 							$("#btnText").hide();
 							$("#btnText2").show();
 							$(".add-to-cart").removeClass("disabled-prim-btn");
-							document.getElementById("btnText2").innerHTML = "<i class='fa fa-shopping-cart'></i>&nbsp;加入购物车";
+							document.getElementById("btnText2").innerHTML = "<i class='fa fa-shopping-cart'></i>&nbsp;Add to cart";
 						}
 					}
 				},{showloading:false});				
