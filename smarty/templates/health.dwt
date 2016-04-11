@@ -111,6 +111,14 @@
 						{/foreach}
 					</ul>
 				</div>
+				<div class="s-cat ">
+					<h3>Adults</h3>
+					<ul>
+						{foreach from=$category[2]->children[2]->children item=subCat}
+							<li><a href="category.php?id={$subCat->cat_id}">{$subCat->cat_ename}</a></li>
+						{/foreach}
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="brand-group cf">

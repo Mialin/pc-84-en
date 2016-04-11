@@ -2596,16 +2596,15 @@ input:focus {
 }
 
 .health .cat-group .wrapper {
-	background-image: url('http://cdn.yamibuy.com/images/common/health-cat-bg.png');
+	background-image: url('http://cdn.yamibuy.com/images/common/health-cat-bg-v3.jpg');
 }
 
 .health .cat-group .s-cat {
-	margin: 10px 0 0 0;
+	margin: 0;
+	width: 400px;
+	padding: 0 30px;
 }
 
-.health .cat-group .s-cat:first-child {
-	margin-left: 390px;
-}
 
 .health .promo-group .ad-cont img{
 	margin: 0 20px 0 0;
