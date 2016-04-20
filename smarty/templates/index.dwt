@@ -31,7 +31,7 @@
                                             <p class="p-des">{$slide->title}</p>
                                         </div>
                                     -->
-                                        <a href="{$slide->url}" target="_blank" >Averta</a>
+                                        <a href="{$slide->url|replace:"/cn/":"/en/"}" target="_blank" >Averta</a>
                                     {/if}
                                     {if $slide->type eq 1}
                                     <!--
@@ -158,13 +158,13 @@
 					
 						{if $i eq 2 }
 							<div class="lg-box">
-							 <a href="brand.php?id=1500" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/b_rec_indx_1500_en.jpg" width="400">
+							 <a href="search.php?keywords=%E6%98%9F%E5%B7%B4%E5%85%8B%20%E7%BB%BD%E6%94%BE" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/s_rec_indx_581_en.jpg" width="400">
 							 </a> 
 							</div>
 							<div class="lg-box">
-							 <a href="stack.php?regular=96" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/b_rec_indx_1511_2_en.jpg" width="400">
+							 <a href="search.php?keywords=dream%20kitchen" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/s_rec_indx_599_en.jpg" width="400">
 							 </a>
 							</div>
 						{/if}
@@ -404,28 +404,28 @@
 						
 						<div class="box-cont">
 							<div class="lg-box tall">
-							 <a href="brand.php?id=727" target="_blank">	
-							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b727_en.jpg" width="400">
+							 <a href="brand.php?id=572" target="_blank">	
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b572_en.jpg" width="400">
 							 </a>	
 							</div>
 							<div class="sm-box tall">
-							 <a href="brand.php?id=1597" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1597_en.jpg" width="200">
+							 <a href="brand.php?id=581" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b581_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
-							 <a href="brand.php?id=1779" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1779_en.jpg" width="200">
+							 <a href="brand.php?id=675" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b675_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall">
-							 <a href="brand.php?id=1247" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1247_en.jpg" width="200">
+							 <a href="brand.php?id=506" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b506_en.jpg" width="200">
 							 </a>
 							</div>
 							<div class="sm-box tall rb">
-							 <a href="brand.php?id=1151" target="_blank">
-							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1151_en.jpg" width="200">
+							 <a href="brand.php?id=1000" target="_blank">
+							  <img src="http://cdn.yamibuy.com/images/en/index/g_indx_b1000_en.jpg" width="200">
 							 </a>
 							</div>
 							

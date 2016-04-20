@@ -49,6 +49,22 @@ html, html a {
 	display: block;
 }
 
+.drop-cats-cont .sub-cat-cont.food {
+	background-image: url("http://cdn.yamibuy.com/images/en/index/cat-food-bg.jpg");
+}
+
+.drop-cats-cont .sub-cat-cont.beauty {
+	background-image: url("http://cdn.yamibuy.com/images/en/index/cat-beauty-bg.jpg");
+}
+
+.drop-cats-cont .sub-cat-cont.health {
+	background-image: url("http://cdn.yamibuy.com/images/en/index/cat-health-bg.jpg");
+}
+
+.drop-cats-cont .sub-cat-cont.appliances {
+	background-image: url("http://cdn.yamibuy.com/images/en/index/cat-appliances-bg.jpg");
+}
+
 .drop-cats-cont .cat-cont .cat {
 	font-weight: bold;
 	line-height: 1.8em;
@@ -98,6 +114,14 @@ html, html a {
 
 .title {
 	font-weight: bold;
+}
+
+.detail-cont .item-name {
+	font-weight: bold;
+}
+
+.item .title {
+    font-weight: bold;
 }
 
 .cat-title {
