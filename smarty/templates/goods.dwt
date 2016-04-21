@@ -356,8 +356,8 @@
 			<div class="popup-container">
 				<div class="popup-content share-popup cf">
 					<div class="invi-head">
-						<h1>Share this item with friends</h1>
-						<p>After Login, use this link to send your friend 300 points upon their registration, and you will earn 500 points when they make first purchase with Yamibuy!</p>
+						<p class="invi-title">Share this item with friends</p>
+						<p class="invi-des">After Login, use this link to send your friend 300 points upon their registration, and you will earn 500 points when they make first purchase with Yamibuy!</p>
 					</div>		
 					<!--mail info-->			
 					<div class="invi-cont">

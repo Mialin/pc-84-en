@@ -76,12 +76,14 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
-.popup-mask .invi-head h1 {
+.popup-mask .invi-head .invi-title {
   font-weight: normal;
   text-align: center;
+  font-size: 24px;
+  margin: .5em 0;
 }
 
-.popup-mask .invi-head p, .popup-mask .invi-head .invi-cont input, .popup-mask .invi-cont .invi-head input, .popup-mask .invi-head .invi-cont textarea, .popup-mask .invi-cont .invi-head textarea {
+.popup-mask .invi-head .invi-des {
   width: 85%;
   margin: 0 auto 20px;
   text-align: center;
@@ -119,6 +121,15 @@
 .popup-mask .invi-cont textarea {
   height: 100px;
   resize: none;
+}
+
+.popup-mask .invi-cont textarea {
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.popup-mask .invi-cont input, .popup-mask .invi-cont textarea {
+  font-size: 12px;
 }
 
 .popup-mask .invi-cont .action-btns {
