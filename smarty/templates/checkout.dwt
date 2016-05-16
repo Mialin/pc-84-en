@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Yamibuy.com Checkout</title>
+	{include file='common/head_light.dwt'}
+</head>
+
+<body>
+	<div class="checkout-page">
+	{include file='common/header_light.dwt'}		
+    
+    <input type="hidden" name="submitError" value="{$submitError.message}" />
+    <input type="hidden" id="submitErrorDetail" value='{str_replace("'","’",$html)}' />
+    <input type="hidden" name="paypalError" value="{$paypalError.message}" />
+		
+		<div class="shipping-sec cf">
+			<div class="wrapper">
+			<p class="title">Shipping Address</p>
+
+				<div class="shipping-cont cf">
+					{if isset($orderInfo->userAddress)}<a id="change-address" href="javascript:void(0)" class="change-btn shipping">Change</a>{/if}
+                    
+                    {if isset($orderInfo->userAddress)}
+                        <div id="shipping-info-cont" class="shipping-info-cont cf">
+                            <span class="address-detail" ><strong>{$orderInfo->userAddress->firstname} {$orderInfo->userAddress->lastname}</strong><br>{$orderInfo->userAddress->address1}{$orderInfo->userAddress->addres2}<br>{$orderInfo->userAddress->city}, {$orderInfo->userAddress->state} {$orderInfo->userAddress->zipcode}<br>United States<br>{$orderInfo->userAddress->phone}</span>
+                        <input type="hidden" id="real-address-id" value="{$orderInfo->userAddress->address_id}" />
+                        </div>
+                    {/if}
+                    
+                    
+					<div class="change shipping" {if isset($orderInfo->userAddress)}style="display:none"{/if} id="all-address">
+                    
+						<div class="option-cont cf shipping">
+							
+							{foreach from=$addressInfo->addrList item=ai key=k}
+								
+                                <div class="radio-cont {if ($k+1)%3 eq 0}no-rm{/if} {if $orderInfo->userAddress->address_id == $ai->address_id}selected{/if} {if $k > 5}hidden-address{/if}" {if $k > 5}style="display:none"{/if} >
+                                    <label class="radio">
+                                        <input type="radio" name="address-option" {if $orderInfo->userAddress->address_id == $ai->address_id}checked{/if} onclick="getErrorItems('{$ai->address_id}','changeAddress')"><span class="outer"><span class="inner"></span></span><span class="option-detail address" ><span class="fname">{$ai->firstname}</span> <span class="lname">{$ai->lastname}</span><br><span class="addr1">{$ai->address1}</span> <span class="addr2">{$ai->address2}</span><br><span class="city">{$ai->city}</span> <br /> <span class="state">{$ai->state}</span> <span class="zipcode">{$ai->zipcode}</span><br>United States<br><span class="phone">{$ai->phone}</span></span></label>
+                                    <div class="option-action-cont">
+                                        <a href="javascript:void(0)" class="edit-btn edit-address">Edit</a>
+                                        <input type="hidden" value="{$ai->address_id}" name="address_id">
+                                        <a href="javascript:void(0)"  class="delete-btn delete-address-btn" onclick="deleteAddress('{$ai->address_id}')">Delete</a>
+                                    </div>
+                                </div>
+                                
+                                
+                                {if $k eq 6}
+                                    <div id="load-more-address" class="load-more-cont">
+                                        <a href="javascript:;" class="load-more-btn">Show More</a>
+                                    </div>
+                                {/if}
+                                
+                            {/foreach}
+						
+						</div>
+						<div class="new-add-cont cf">
+							{if ($addressInfo->addrList|@count) > 0}<a href="javascript:;" class="outline-btn new-add-btn shipping" id="add-address">Add a New Address</a>{/if}
+							<div class="new-address-cont cf" {if ($addressInfo->addrList|@count) > 0 or isset($orderInfo->userAddress)}style="display:none"{/if}>
+								<div class="form-cont cf shipping">
+									<div class="input-cont half">
+										<label for="email">First Name</label>
+										<div class="input">
+											<input type="text" id="addr-firstname" class="text-input" maxlength="25">
+										</div>
+										<!-- <p class="err-msg">请输入邮箱</p> -->
+									</div>
+									<div class="input-cont half">
+										<label for="pw">Last Name</label>
+										<div class="input">
+											<input type="text" id="addr-lastname" class="text-input" maxlength="25">
+										</div>
+									</div>
+									<div class="input-cont ">
+										<label for="pw">Street</label>
+										<div class="input">
+											<input type="text" id="addr-address1" class="text-input" maxlength="60">
+										</div>
+									</div>
+									<div class="input-cont ">
+										<label for="pw">Apt, suite, bldg, c/o ...</label>
+										<div class="input">
+											<input type="text" id="addr-address2" class="text-input" maxlength="60">
+										</div>
+									</div>
+									<div class="input-cont third">
+										<label for="pw">City</label>
+										<div class="input">
+											<input type="text" id="addr-city" class="text-input" maxlength="30">
+										</div>
+									</div>
+									<div class="input-cont third">
+										<label for="pw">State</label>
+										<div class="input">
+											<select id="addr-state" class="" ><option value="" ename="" >Select</option><option value="0" ename="Alabama">Alabama</option><option value="1" ename="Alaska">Alaska</option><option value="2" ename="Arizona">Arizona</option><option value="3" ename="Arkansas">Arkansas</option><option value="4" ename="California">California</option><option value="5" ename="Colorado">Colorado</option><option value="6" ename="Connecticut">Connecticut</option><option value="7" ename="Delaware">Delaware</option><option value="8" ename="District of Columbia">District of Columbia</option><option value="9" ename="Florida">Florida</option><option value="10" ename="Georgia">Georgia</option><option value="11" ename="Hawaii">Hawaii</option><option value="12" ename="Idaho">Idaho</option><option value="13" ename="Illinois">Illinois</option><option value="14" ename="Indiana">Indiana</option><option value="15" ename="Iowa">Iowa</option><option value="16" ename="Kansas">Kansas</option><option value="17" ename="Kentucky">Kentucky</option><option value="18" ename="Louisiana">Louisiana</option><option value="19" ename="Maine">Maine</option><option value="20" ename="Maryland">Maryland</option><option value="21" ename="Massachusetts">Massachusetts</option><option value="22" ename="Michigan">Michigan</option><option value="23" ename="Minnesota">Minnesota</option><option value="24" ename="Mississippi">Mississippi</option><option value="25" ename="Missouri">Missouri</option><option value="26" ename="Montana">Montana</option><option value="27" ename="Nebraska">Nebraska</option><option value="28" ename="Nevada">Nevada</option><option value="29" ename="New Hampshire">New Hampshire</option><option value="30" ename="New Jersey">New Jersey</option><option value="31" ename="New Mexico">New Mexico</option><option value="32" ename="New York">New York</option><option value="33" ename="North Carolina">North Carolina</option><option value="34" ename="North Dakota">North Dakota</option><option value="35" ename=Ohio>Ohio</option><option value="36" ename="Oklahoma">Oklahoma</option><option value="37" ename="Oregon">Oregon</option><option value="38" ename="Pennsylvania">Pennsylvania</option><option value="39" ename="Rhode Island">Rhode Island</option><option value="40" ename="South Carolina">South Carolina</option><option value="41" ename="South Dakota">South Dakota</option><option value="42" ename="Tennessee">Tennessee</option><option value="43" ename="Texas">Texas</option><option value="44" ename="Utah">Utah</option><option value="45" ename="Vermont">Vermont</option><option value="46" ename="Virginia">Virginia</option><option value="47" ename="Washington">Washington</option><option value="48" ename="West Virginia">West Virginia</option><option value="49" ename="Wisconsin">Wisconsin</option><option value="50" ename="Wyoming">Wyoming</option></select>
+										</div>
+									</div>
+									<div class="input-cont third">
+										<label for="pw">Zip</label>
+										<div class="input">
+											<input type="text" id="addr-zipcode" class="text-input" maxlength="5">
+										</div>
+									</div>
+									<div class="input-cont half">
+										<label for="email">Phone</label>
+										<div class="input">
+											<input type="text" id="addr-phone" class="text-input" maxlength="30">
+										</div>
+										<!-- <p class="err-msg">请输入邮箱</p> -->
+									</div>
+									<div class="input-cont half">
+										<label for="pw">Email</label>
+										<div class="input">
+											<input type="text" id="addr-email" class="text-input" maxlength="50">
+										</div>
+									</div>
+									<div class="action-btn-cont cf">
+                                    	<input type="hidden" name="action" value="newAddress" id="action" />
+                                        <input type="hidden" value="" name="address_id">
+										<a href="javascript:;" class="orange-btn prim-btn" id="save-address">Save Address</a>
+										{if ($addressInfo->addrList|@count) > 0}<a href="javascript:;" class="cancel-btn" id="cancel-add-edit-btn">Cancel</a>{/if}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="payment-sec cf">
+			<div class="wrapper">
+			<p class="title">Billing</p>
+				<div class="payment-cont cf">
+                	
+                    {if isset($orderInfo->profile)}
+						<a href="javascript:void(0)" id="change-card" class="change-btn payment">Change</a>
+                    {/if}
+                    
+                    <form id="order-form" action="checkout.php" method="post">
+                    
+					<div class="radio-cont bb {if isset($orderInfo->profile) and $orderInfo->profile->profile_id neq 0 and $smarty.get.action neq 'sPaypal'}selected{/if}" >
+						<label class="radio">
+    						<input value="{$orderInfo->profile->profile_id}" id="card-radio" type="radio" name="payment-method" {if isset($orderInfo->profile) and $orderInfo->profile->profile_id neq 0 and $smarty.get.action neq 'sPaypal'}checked{/if}><span class="outer"><span class="inner"></span></span><i class="fa fa-credit-card"></i>Credit Card
+    					</label>
+                        
+                        {if isset($orderInfo->profile) and $orderInfo->profile->profile_id neq 0}
+                            <div class="card-info-cont cf">
+                                <span id="selected-card-detail" class="card-detail" ><strong>{$orderInfo->profile->type} ending in {$orderInfo->profile->tail}</strong> Expires on {$orderInfo->profile->exp_month}/{$orderInfo->profile->exp_year}</span>
+                            </div>
+                            
+                            <!--显示安全码-->
+                            <div id="cvv-panel" class="input-cont third cvv">
+                                <label for="pw">CVV</label>
+                                <div class="input">
+                                	 
+
+                                        <input type="hidden" name="amount" value="{$checkoutInfo->total->amount}" />
+                                    	<input type="text" id="card-cvv" class="text-input" name="csc" >
+                                     
+                                </div>
+                            </div><br>
+                            
+                        {/if}
+						
+                        <input type="hidden" name="is-empty" value="{if isset($orderInfo->profile) and $orderInfo->profile->profile_id neq 0}no {else}yes{/if}">
+						<div class="change card change-card-panel" style="display: none;">
+							<div class="option-cont cf shipping">
+                                {foreach from=$payments->payments item=pp key=k}
+                                	<div class="radio-cont {if ($k+1)%3 eq 0}no-rm{/if}  {if $orderInfo->profile->profile_id eq $pp->profile_id }selected{/if}" {if $k>5}style="display:none"{/if} >
+                                        <label class="radio">
+                                            <input type="radio" name="card-option" {if $orderInfo->profile->profile_id eq $pp->profile_id}checked{/if} onclick="changeCard('{$pp->profile_id}', '{if isset($pp->address)}1{else}0{/if}')"><span class="outer"><span class="inner"></span></span><span class="option-detail card"><strong>{$pp->type} ending in {$pp->tail}<br>Expires on {$pp->exp_month}/{$pp->exp_year}</strong><br>{$pp->address->address1} {$pp->address->address2}<br>{$pp->address->city}<br>{$pp->address->state} {$pp->address->zipcode}</span></label>
+                                        <!--<div class="option-action-cont">
+                                            <a href="javascript:void(0)" class="edit-btn edit-card">编辑</a>
+                                            
+                                            <a href="javascript:;"  class="delete-btn">删除</a>
+                                        </div>-->
+                                        <input type="hidden" name="profile_id" value="{$pp->profile_id}">
+                                    </div>
+                                    
+                                    {if $k eq 6}
+                                        <div id="load-more-card" class="load-more-cont">
+                                            <a href="javascript:;" class="load-more-btn" >Show More</a>
+                                        </div>
+                                    {/if}
+                                    
+                                {/foreach}
+	
+							</div>
+							
+							<div class="new-add-cont cf" >
+								<a href="javascript:;" class="outline-btn new-add-btn card" id="add-card">Add a New Card</a>
+								<div class="new-payment-cont cf" {if isset($orderInfo->profile)}style="display: none;"{/if}>
+			    					<div class="new-payment form-cont cf">
+										<div class="input-cont name-input-cont">
+											<label for="pw">Full Name</label>
+											<div class="input">
+												<input type="text" id="card-firstname" class="text-input" maxlength="50">
+											</div>
+										</div>
+										<div class="input-cont card-number-input-cont">
+											<label for="pw" >Card number</label>
+											<div class="input">
+												<input type="text" id="card-number" class="text-input" maxlength="16">
+											</div>
+										</div>
+										<div class="input-cont third">
+											<label for="pw">Month</label>
+											<div class="input">
+												<select id="card-month" class="" ><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select>
+											</div>
+										</div>
+										<div class="input-cont third">
+											<label for="pw">Year</label>
+											<div class="input">
+												<select id="card-year" class="" ><option value="" class="">yyyy</option><option value="0">2015</option><option value="1">2016</option><option value="2">2017</option><option value="3">2018</option><option value="4">2019</option><option value="5">2020</option><option value="6">2021</option><option value="7">2022</option><option value="8">2023</option><option value="9">2024</option><option value="10">2025</option><option value="11">2026</option></select>
+											</div>
+										</div>
+										<!--<div class="input-cont third cvv">
+											<label for="pw">安全码</label>
+											<div class="input">
+												<input type="text" id="card-cvv" class="text-input">
+											</div>
+										</div>-->
+									</div>
+									<p class="ba-title" id="billing-addr-txt">Billing Address</p>
+									<div class="radio-cont cb">
+									<label class="checkbox">
+			    						<input id="ba-checkbox" type="checkbox" name="ba" checked><span class="outer"><span class="inner"></span></span>Same as shipping address</label>
+									</div>
+									<div class="option-cont cf address-book"  style="display: none;">
+										<p>Select an Existing Address<a href="javascript:;" class="add-new-2">&#43;Add a New Address</a></p>
+                                        
+										{foreach from=$addressInfo->addrList item=address key=k}
+                        	
+                                            <div class="radio-cont {if ($k+1)%2 eq 0}no-rm{/if}">
+                                                <label class="radio">
+                                                    <input value="{$address->address_id}" type="radio" name="address-option" ><span class="outer"><span class="inner"></span></span><span class="option-detail address" >{$address->firstname} {$address->lastname}<br>{$address->address1} {$address->address2}<br>{$address->city}, {$address->state} {$address->zipcode}<br>United States<br>{$address->phone}</span></label>
+                                            </div>
+                                            
+                                        {/foreach}
+										
+									</div>
+									<div class="form-cont cf billing-address" style="display: none;">
+										<div class="input-cont half">
+											<label for="email">First Name</label>
+											<div class="input">
+												<input type="text" id="bill-firstname" class="text-input" maxlength="25">
+											</div>
+											<!-- <p class="err-msg">请输入邮箱</p> -->
+										</div>
+										<div class="input-cont half">
+											<label for="pw">Last Name</label>
+											<div class="input">
+												<input type="text" id="bill-lastname" class="text-input" maxlength="25">
+											</div>
+										</div>
+										<div class="input-cont ">
+											<label for="pw">Street</label>
+											<div class="input">
+												<input type="text" id="bill-address1" class="text-input" maxlength="60">
+											</div>
+										</div>
+										<div class="input-cont ">
+											<label for="pw">Apt, suite, bldg, c/o ...</label>
+											<div class="input">
+												<input type="text" id="bill-address2" class="text-input" maxlength="60">
+											</div>
+										</div>
+										<div class="input-cont third">
+											<label for="pw">City</label>
+											<div class="input">
+												<input type="text" id="bill-city" class="text-input" maxlength="30">
+											</div>
+										</div>
+										<div class="input-cont third">
+											<label for="pw">State</label>
+											<div class="input">
+												<select id="bill-state" class="" ><option value="" class="">Select</option><option value="0">Alabama</option><option value="1">Alaska</option><option value="2">Arizona</option><option value="3">Arkansas</option><option value="4">California</option><option value="5">Colorado</option><option value="6">Connecticut</option><option value="7">Delaware</option><option value="8">District of Columbia</option><option value="9">Florida</option><option value="10">Georgia</option><option value="11">Hawaii</option><option value="12">Idaho</option><option value="13">Illinois</option><option value="14">Indiana</option><option value="15">Iowa</option><option value="16">Kansas</option><option value="17">Kentucky</option><option value="18">Louisiana</option><option value="19">Maine</option><option value="20">Maryland</option><option value="21">Massachusetts</option><option value="22">Michigan</option><option value="23">Minnesota</option><option value="24">Mississippi</option><option value="25">Missouri</option><option value="26">Montana</option><option value="27">Nebraska</option><option value="28">Nevada</option><option value="29">New Hampshire</option><option value="30">New Jersey</option><option value="31">New Mexico</option><option value="32">New York</option><option value="33">North Carolina</option><option value="34">North Dakota</option><option value="35">Ohio</option><option value="36">Oklahoma</option><option value="37">Oregon</option><option value="38">Pennsylvania</option><option value="39">Rhode Island</option><option value="40">South Carolina</option><option value="41">South Dakota</option><option value="42">Tennessee</option><option value="43">Texas</option><option value="44">Utah</option><option value="45">Vermont</option><option value="46">Virginia</option><option value="47">Washington</option><option value="48">West Virginia</option><option value="49">Wisconsin</option><option value="50">Wyoming</option></select>
+											</div>
+										</div>
+										<div class="input-cont third">
+											<label for="pw">Zip</label>
+											<div class="input">
+												<input type="text" id="bill-zipcode" class="text-input" maxlength="15">
+											</div>
+										</div>
+										<div class="input-cont half">
+											<label for="email">Phone</label>
+											<div class="input">
+												<input type="text" id="bill-phone" class="text-input" maxlength="30">
+											</div>
+											<!-- <p class="err-msg">请输入邮箱</p> -->
+										</div>
+										<div class="input-cont half">
+											<label for="pw">Email</label>
+											<div class="input">
+												<input type="text" id="bill-email" class="text-input" maxlength="50">
+											</div>
+										</div>
+										
+									</div>
+									<div class="action-btn-cont cf">
+                                    	<input type="hidden" name="action" value="newPayment" id="action-card" />
+                                        <input type="hidden" value="" name="profile_id">
+										<a href="javascript:;" class="orange-btn prim-btn" id="save-card">Save Card</a>
+										<a href="javascript:;" class="cancel-btn" id="cancel-add-edit-card-btn">Cancel</a>
+									</div>
+								</div>
+							</div>
+						</div><!--更改银行卡结束-->
+						
+					</div><!--radio cont结束-->
+					
+					<div class="radio-cont {if (isset($orderInfo->profile) and $orderInfo->profile->profile_id eq 0) or $smarty.get.action eq 'sPaypal'}selected{/if}">
+						<label class="radio">
+    						<input value="0" id="paypal-radio" type="radio" name="payment-method" {if (isset($orderInfo->profile) and $orderInfo->profile->profile_id eq 0) or $smarty.get.action eq 'sPaypal'}checked{/if}><span class="outer"><span class="inner"></span></span><i class="fa fa-paypal"></i>Paypal</label>
+
+    					<div class="new-paypal-cont cf" {if $smarty.get.action neq 'sPaypal'}style="display:none;"{/if}>
+    						{if $smarty.get.action eq "sPaypal"}
+    							<p>{$pEmail}</p>
+    						{else}
+								<p>You will be re-directed to Paypal.com</p>
+							{/if}
+							
+							<a onclick="showloading()" href="checkout.php?action=paypal&amount={$checkoutInfo->total->amount}" class="orange-btn prim-btn" >Go to Paypal</a>
+						</div>
+					</div>
+					
+				</div>
+                
+                <input type="hidden" name="action" value="submitOrder" />
+                </form><!--提交表格结束-->
+                
+                {if $checkoutInfo->total->pointDisplay > 0}
+                    <div class="points-cont cf">
+                        <p><i class="fa fa-gift"></i>Use {$checkoutInfo->total->pointDisplay} as ${($checkoutInfo->total->pointDisplay / 100)}</p>
+                        <a href="javascript:;" onclick="spendPoints({if $checkoutInfo->total->pointFlag eq 0}1{else}0{/if})" class="outline-btn use-point">{if $checkoutInfo->total->pointFlag eq 0}Use{else}cancel{/if}</a>
+                    </div>
+                {/if}
+                
+                
+				<!--<div class="points-cont cf">
+					<p><i class="fa fa-gift"></i>使用{$checkoutInfo->total->pointDisplay}积分抵扣${($checkoutInfo->total->pointDisplay / 100)|round:3}</p>
+					<a href="" class="outline-btn use-point">使用积分</a>
+				</div>-->
+			</div>
+		</div>
+
+		<div class="delivery-sec cf">
+			<div class="wrapper">
+				<p class="title">Delivery</p>
+				
+				
+				{foreach from=$checkoutInfo->vendorCart item=vc key=k}
+					
+					
+					<div class="delivery-cont cf" id="seller2">
+					<div class="left-cont cf">
+						<p class="seller"><i class="fa fa-truck"></i>订单{$k+1}/{$checkoutInfo->vendorCart|@count}由&nbsp;<strong>{$vc->vendor->vendor_ename}</strong>&nbsp;发货</p>
+						
+						{foreach from=$vc->shipping item=vs}
+							<!--<div class="radio-cont {if $vs->shipping_id eq $vc->shipping->shipping_id}selected{/if}">-->
+							<div class="radio-cont {if $vs->choose_flag eq 1}selected{/if}">
+								<label class="radio">
+		    						<!--<input onclick="changeShipping('{$vc->vendor->vendor_id}','{$vs->shipping_id}')" type="radio" name="selling{$vc->vendor->vendor_id}-shipping" {if $vs->shipping_id eq $vc->shipping->shipping_id}checked{/if}>-->
+		    						<input onclick="changeShipping('{$vc->vendor->vendor_id}','{$vs->shipping_id}')" type="radio" name="selling{$vc->vendor->vendor_id}-shipping" {if $vs->choose_flag eq 1}checked{/if}>
+                          <span class="outer">
+                          	<span class="inner"></span>
+                          </span></i>
+                          <span>{$vs->shippingName}</span>
+                          
+                          <span class="s-fee">
+                          		{if $vs->free_shipping eq 1}
+                              	Free
+                              {else}
+                              	${$vs->shippingFee}
+                              {/if}
+                          </span>
+                          <span class="s-des">{$vs->shippingEdesc}</span>
+                </label>
+							</div>
+						{/foreach}
+						
+						
+					</div>
+					<div class="right-cont cf">
+						<div class="item-list-cont cf">
+						
+							{foreach from=$vc->cart item=goods}
+								
+								<div class="item-cont cf">
+									<img src="{$common->getResourceByRequest($goods->image)}" width="80">
+									<p class="item-name">{$goods->ename}</p>
+									<div class="price-cont cf">
+										<p class="item-total">${$goods->subtotal}</p>
+										<p class="each">${$goods->price} x {$goods->number}</p>
+									</div>
+								</div>
+								
+							{/foreach}
+	
+						</div>
+					</div>
+				</div>
+					
+				{/foreach}
+			</div>
+		</div>
+
+		<div class="total-sec cf">
+			<div class="wrapper">
+				<div class="dl-cont cf">
+					<dl>
+						<dt>ITEM TOTAL</dt>
+						<dd>${$checkoutInfo->total->subtotal}</dd>
+						<dt>PROMO CODE</dt>
+						<dd>-${$checkoutInfo->total->discount}</dd>
+						<dt>POINTS</dt>
+						<dd>-${$checkoutInfo->total->points}</dd>
+						<dt>SHIPPING</dt>
+						<dd>${$checkoutInfo->total->shipping}</dd>
+						<dt>TAX</dt>
+						<dd>${$checkoutInfo->total->tax}</dd>
+					</dl>
+					<dl class="total">
+						<dt>ORDER TOTAL</dt>
+						<dd>${$checkoutInfo->total->amount}</dd>
+						
+					</dl>
+				</div>
+				<div class="submit-order-cont">
+					<p>ORDER TOTAL</p>
+					<p class="order-total">${$checkoutInfo->total->amount}</p>
+					<!--<a href="javascript:;" class="orange-btn prim-btn" id="submit-order-final"
+                    onclick="getErrorItems({$orderInfo->userAddress->address_id},'submitOrder')">
+                    	PLACE ORDER
+                    </a>-->
+              <a href="javascript:;" class="orange-btn prim-btn" id="submit-order-final"
+                    onclick="submitOrder()">
+                    	PLACE ORDER
+                    </a>
+                    
+                   
+				</div>
+			</div>
+		</div>
+		<div id='itemContainer' style="display:none">
+			{include file='common/delete_items.dwt'}
+		</div>
+		<div id='itemContainer2' style="display:none">
+			{include file='common/delete_items_submit_order.dwt'}
+		</div>
+		
+		{include file='common/footer_light.dwt'}
+	</div>
+	
+	{literal}
+<script>
+		
+			function editAddress(action,firstname,lastname,address1,address2,city,state,zipcode,phone,email,address_id,withErrorItem)
+			{
+				$.yamibuy.common.showLoading();
+				$('.popup-mask').css('z-index', '100');
+					$.yamibuy.common.doAjax(
+				
+						'checkout.php',
+						
+						{
+							action:action,
+							firstname:firstname,
+							lastname:lastname,
+							address1:address1,
+							address2:address2,
+							city:city,
+							state:state,
+							zipcode:zipcode,
+							phone:phone,
+							email:email,
+							address_id:address_id,
+							withErrorItem:withErrorItem
+						},
+						
+						function(data){
+							//执行失败
+							if(data.status == 1)
+							{
+								$.yamibuy.common.hideLoading();
+								$.yamibuy.common.alert(data.message);
+								//alert(data.message);	
+							}
+							//执行成功
+							else
+							{	
+								//alert("修改成功");
+								window.location.href="checkout.php";
+							}
+						},
+						
+						{showloading:false}
+					);
+			}
+			
+			function newAddress(action,firstname,lastname,address1,address2,city,state,zipcode,phone,email,withErrorItem)
+			{
+				$.yamibuy.common.showLoading();
+				$('.popup-mask').css('z-index', '100');
+					$.yamibuy.common.doAjax(
+				
+							'checkout.php',
+							
+							{
+								action:action,
+								firstname:firstname,
+								lastname:lastname,
+								address1:address1,
+								address2:address2,
+								city:city,
+								state:state,
+								zipcode:zipcode,
+								phone:phone,
+								email:email,
+								withErrorItem:withErrorItem
+							},
+							
+							function(data){
+								
+								//执行失败
+								if(data.status == 1)
+								{
+									$.yamibuy.common.hideLoading();
+									$.yamibuy.common.alert(data.message);	
+								}
+								//执行成功
+								else
+								{
+									//alert("添加成功");
+									window.location.href="checkout.php";	
+								}
+							},
+							
+							{showloading:false}
+						);	
+			}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$(window).scroll(function() {
+				if ($(this).scrollTop() > 200) {
+					$('.go-top').fadeIn(200);
+				} else {
+					$('.go-top').fadeOut(200);
+				}
+			});
+
+		});
+		//new
+		function closePopup(){
+			$.yamibuy.common.hideLoading();
+			$('.popup-mask').css('display', 'none');
+			$('html, body').css('overflow', 'auto');
+		}
+
+		function goTop() {   
+			$('html, body').animate({scrollTop: 0}, 300);
+		}
+
+		function slideOut() {   
+			$('.contact-info').animate({width:'toggle'}, 350);
+		}
+
+		$(function() {
+			
+			//如果paypal支付方式被选中 就展开下面隐藏的内容
+			if($("#paypal-radio").is(":checked"))
+			{
+				$(".new-paypal-cont").show();	
+			}
+			
+			//如果有paypalError
+			var paypalError = jQuery.trim( $("input[name=paypalError]").val() );
+			if( paypalError != "" )
+			{
+				$.yamibuy.common.alert(paypalError);	
+			}
+			
+			//如果有submitError
+			var submitError = jQuery.trim( $("input[name=submitError]").val() );
+			if( submitError != "" )
+			{
+				$.yamibuy.common.alert(submitError);
+				//alert(submitError);
+			}
+			
+			//Check submitErrorDetail
+			var submitErrorDetail = $("#submitErrorDetail").val();
+			$('#itemContainer2').empty();
+			if(submitErrorDetail != "")
+			{
+				$('#itemContainer2').append(submitErrorDetail);	
+				$('#itemContainer2').show();
+				$('html, body').css('overflow', 'hidden');
+			}
+			
+			$('.promo-bar').waypoint(function() {
+				if ($(".nav-main-2").is(":hidden")) {
+					$(".nav-main-2").slideDown(100);
+				} else {
+					$(".nav-main-2").slideUp(100);
+				};
+
+
+			});
+
+			$('.promo-bar').waypoint(function(direction) {
+				if (direction == 'up'){
+					$(".cart-cont").unwrap();
+				} else {
+					$(".cart-cont").wrap("<div class='full-w-cart'></div>");
+				}
+
+			});
+
+
+			$('.promo-bar').waypoint(function() {
+				if ($(".full-w-cart").hasClass("po-fixed")){
+					$(".full-w-cart").removeClass("po-fixed");
+				} else {
+					$(".full-w-cart").addClass("po-fixed");
+				}
+			});
+
+			$('.register-btn').click(function(){
+				$('.hidden-cont').removeClass('hidden');
+			});
+
+			$('input[name=payment-method]').click(function(){
+				
+		        if(this.id == 'paypal-radio'){
+		            $('.new-paypal-cont').slideDown('slow');
+					$('.new-payment-cont').slideUp('slow');	
+					$('.change-card-panel').slideUp('slow');				
+		        }
+		        else if(this.id == 'card-radio') {
+					$('.new-paypal-cont').slideUp('slow');
+					
+					//获取当前的的orderInfo里面是否存在profile 存在就是yes 不存在是no
+					var is_empty = $("input[name=is-empty]").val();
+					
+					//如果当前orderInfo的profile是空的 就显示添加银行卡部分
+					if(is_empty == "yes")
+					{
+						$('.change-card-panel').show();
+						$('.new-payment-cont').slideDown('slow');
+						
+						$("#change-card").html("cancel");
+					}
+		        }
+
+    		});
+
+			
+			//点击添加新地址
+    		$('#add-address').click(function(){
+		        $('.new-address-cont').fadeIn('slow');
+				
+				//修改当前action为newAddress
+				$("#action").val("newAddress");
+    		});
+
+    		$('.form-cont.shipping .cancel-btn').click(function(){
+		        $('.new-address-cont').fadeOut('slow');
+    		});
+			
+			$("#cancel-add-edit-card-btn").click(function(){
+				resetElements();	
+			});
+			
+			/*$('.change.card .cancel-btn').click(function(){
+		        $('.new-payment-cont').fadeOut('slow');
+    		});*/
+
+    		$('.new-add-btn.card').click(function(){
+		        $('.new-payment-cont').fadeIn('slow');
+    		});
+
+    		/*$('.form-cont.card .cancel-btn').click(function(){
+		        $('.new-payment-cont').fadeOut('slow');
+    		});*/
+
+			$('#ba-checkbox').change(function(){
+		        $('.new-payment-cont .radio-cont.cb').hide();
+	            $('.option-cont.address-book').slideDown('slow');
+    		});
+
+    		$('.add-new-2').click(function(){
+				$('.option-cont.address-book').fadeOut(function(){
+					$('.form-cont.billing-address').fadeIn()
+				});
+			});
+
+    		
+    		
+    		//点击修改地址 显示所有地址
+    		$("#change-address").click(function(){
+
+				if(!$("#all-address").is(":visible")){
+					//隐藏当前地址信息
+					$("#shipping-info-cont").hide();
+					$("#all-address").show();
+					$(this).html("Cancel");
+				}else
+				{
+					$("#all-address").hide();
+					$(this).html("Change");	
+					//显示当前地址信息
+					$("#shipping-info-cont").show();
+				}
+    		});
+			
+			//点击加载更多地址
+			$("#load-more-address").click(function(){
+				//alert($(".hidden-address").length);
+				$(".hidden-address").show();
+				$(this).hide();
+				
+			});
+
+
+			//点击radio 外面的div为selected状态
+			$("input[type=radio]").click(function(){
+				
+				$(this).parents(".radio-cont").addClass("selected");
+				$(this).parents(".radio-cont").siblings().removeClass("selected");
+				
+			});
+			
+			//点击更改银行卡链接
+			$("#change-card").click(function(){
+				
+				if(!$(".change-card-panel").is(":visible"))
+				{
+					$(".change-card-panel").show();
+					$(this).html("Cancel");
+					//隐藏当前银行卡信息和CVV框
+					$("#selected-card-detail").hide();
+					$("#cvv-panel").hide();
+				}
+				else
+				{
+					/*$(".change-card-panel").hide();
+					$(this).html("Change");	
+					
+					//显示当前银行卡信息和CVV框
+					$("#selected-card-detail").show();
+					$("#cvv-panel").show();*/
+					resetElements();
+				}
+				
+				
+			});
+			
+			//点击显示更多银行卡
+			$("#load-more-card").click(function(){
+				$(".change-card-panel .radio-cont").show();
+				$(this).hide();
+			});
+			
+			
+			//点击编辑地址
+			$(".edit-address").click(function(){
+				
+				//展开编辑框
+				$(".new-address-cont").show();
+				
+				//显示"编辑新的地址"文字
+				$("#add-address").html("Edit an Address");
+				
+				//改变取消按钮对应的文字
+				$("#cancel-add-edit-btn").html("Cancel");
+				
+				//当前操作为编辑地址editAddress
+				$("#action").val("editAddress");
+				
+				//把保存地址旁边的input hidden设置为当前要编辑的addresss_id
+				var address_id = $(this).siblings("input[name=address_id]").val();
+				
+				//保存地址按钮旁边的隐藏input address_id赋值
+				$("#save-address").siblings("input[name=address_id]").val(address_id);
+				
+
+				//当前编辑的地址radio设置为选中状态
+				$(this).parents(".radio-cont").find("input[name=address-option]").prop("checked", true);
+				
+				//当前选中的div加边框
+				$(this).parents(".radio-cont").addClass("selected");
+				
+				//去掉原来选中的边框
+				$(this).parents(".radio-cont").siblings(".radio-cont").removeClass("selected");
+				
+				//去掉原来选中的radio
+				$(this).parents(".radio-cont").siblings(".radio-cont").find("input[name=address-option]").prop("checked", false);
+				
+				
+
+				//把当前各项信息copy到输入框中
+				var firstname =$(this).parents(".radio-cont").find("span.fname").html();
+				
+				var lastname = $(this).parents(".radio-cont").find("span.lname").html();
+				var address1 = $(this).parents(".radio-cont").find("span.addr1").html();
+				var address2 = $(this).parents(".radio-cont").find("span.addr2").html();
+				var city = $(this).parents(".radio-cont").find("span.city").html();
+				var state = $(this).parents(".radio-cont").find("span.state").html();
+				var zipcode = $(this).parents(".radio-cont").find("span.zipcode").html();
+				var phone = $(this).parents(".radio-cont").find("span.phone").html();
+
+				$("#addr-firstname").val(firstname);
+				$("#addr-lastname").val(lastname);
+				$("#addr-address1").val(address1);
+				$("#addr-address2").val(address2);
+				$("#addr-city").val(city);
+				$("#addr-state").get(0).selectedIndex = getSelectedIndex(state);
+				$("#addr-zipcode").val(zipcode);
+				$("#addr-phone").val(phone);
+	
+			});
+			
+			
+			//根据州的名字 获取option对应的index
+			function getSelectedIndex(value)
+			{
+				var result = -1;
+				$("#addr-state option").each(function(index, element) {
+                    if($(element).html() == value)
+					{
+						result = index;
+
+					}
+                });	
+				return result;
+			}
+
+			//点击保存地址按钮动作
+			$("#save-address").click(function(){
+				
+				//获取当前是add address还是edit adderss
+				var action = $("#action").val();
+
+				
+				//获取要编辑的地址address_id
+				var editAddress_id = $(this).siblings("input[name=address_id]").val();
+				
+				var firstname = jQuery.trim($("#addr-firstname").val());
+				var lastname = jQuery.trim($("#addr-lastname").val());
+				var address1 = jQuery.trim($("#addr-address1").val());
+				var address2 = jQuery.trim($("#addr-address2").val());
+				var city = jQuery.trim($("#addr-city").val());
+				var state = jQuery.trim($("#addr-state").find("option:selected").attr("ename"));
+				var zipcode = jQuery.trim($("#addr-zipcode").val());
+				var phone = jQuery.trim($("#addr-phone").val());
+				var email = jQuery.trim($("#addr-email").val());
+				
+				getErrorItems("",action,firstname,lastname,address1,address2,city,state,zipcode,phone,email,editAddress_id);
+				/*
+				if(action == "editAddress")
+				{
+					$.yamibuy.common.showLoading();
+					$.yamibuy.common.doAjax(
+				
+						'checkout.php',
+						
+						{
+							action:action,
+							firstname:firstname,
+							lastname:lastname,
+							address1:address1,
+							address2:address2,
+							city:city,
+							state:state,
+							zipcode:zipcode,
+							phone:phone,
+							email:email,
+							address_id:address_id
+						},
+						
+						function(data){
+							//执行失败
+							if(data.status == 1)
+							{
+								$.yamibuy.common.hideLoading();
+								$.yamibuy.common.alert(data.message);
+								//alert(data.message);	
+							}
+							//执行成功
+							else
+							{	
+								//alert("修改成功");
+								window.location.href="checkout.php";
+							}
+						},
+						
+						{showloading:false}
+					);
+				}
+				else if(action == "newAddress")
+				{
+					$.yamibuy.common.showLoading();
+					$.yamibuy.common.doAjax(
+				
+							'checkout.php',
+							
+							{
+								action:action,
+								firstname:firstname,
+								lastname:lastname,
+								address1:address1,
+								address2:address2,
+								city:city,
+								state:state,
+								zipcode:zipcode,
+								phone:phone,
+								email:email,
+							},
+							
+							function(data){
+								
+								//执行失败
+								if(data.status == 1)
+								{
+									$.yamibuy.common.hideLoading();
+									$.yamibuy.common.alert(data.message);	
+								}
+								//执行成功
+								else
+								{
+									//alert("添加成功");
+									window.location.href="checkout.php";	
+								}
+							},
+							
+							{showloading:false}
+						);
+					}
+					*/				
+			});
+			
+			//判断卡号是否为数字
+			function checkCardNumber(s)
+			{
+				if(s!=null){
+					var r,re;
+					re = /\d*/i; //\d表示数字,*表示匹配多个数字
+					r = s.match(re);
+					return (r==s)?true:false;
+				}
+				return false;	
+			}
+			
+			//save-card分为 newPayment和bindAddress
+			$("#save-card").click(function(){
+				
+				//按钮变灰
+				$(this).addClass("disabled-prim-btn");
+				
+				//获取当前是newPament还是bindAddress
+				var action_card = $("#action-card").val();
+
+				//获取要编辑的地址profile_id
+				var profile_id = $(this).siblings("input[name=profile_id]").val();
+				var card_firstname = jQuery.trim($("#card-firstname").val());
+				var card_lastname = "";
+				var exp_year = jQuery.trim($("#card-year").find("option:selected").text());
+				var exp_month = jQuery.trim($("#card-month").find("option:selected").val());
+				
+				//获取当前选中使用的address_id
+				var address_id = $("#real-address-id").val();
+				//如果address_id没有定义 则传空字符串
+				address_id = (address_id==undefined) ? "" : address_id;
+				
+				//获取卡号
+				var account = jQuery.trim($("#card-number").val());
+
+				//如果是newPayment
+				if(action_card == "newPayment")
+				{
+							//判断银行卡是否合法
+							if(!checkCardNumber(account))
+							{
+								$.yamibuy.common.alert("card number should be numbers only");
+								$("#save-card").removeClass("disabled-prim-btn");	
+								return false;
+							}
+							//如果与收获地址相通的选上了
+							if($("#ba-checkbox").is(':checked'))
+							{
+								$.yamibuy.common.showLoading();
+								$.yamibuy.common.doAjax(
+						
+									'checkout.php',
+									
+									{
+										action:action_card,
+										account:account,
+										card_firstname:card_firstname,
+										card_lastname:card_lastname,
+										exp_year:exp_year,
+										exp_month:exp_month,
+										address_id:address_id,
+										
+									},
+									
+									function(data){
+										//执行失败
+										if(data.status == 1)
+										{
+											$.yamibuy.common.hideLoading();
+											$("#save-card").removeClass("disabled-prim-btn");
+											$.yamibuy.common.alert(data.message);	
+										}
+										//执行成功
+										else
+										{
+											//alert("修改成功");
+											window.location.href="checkout.php";
+											
+										}
+									},
+									
+									{showloading:false}
+								);	
+							}
+							//如果billiing address和收获地址不相同
+							else
+							{
+								var firstname = jQuery.trim($("#bill-firstname").val());
+								var lastname = jQuery.trim($("#bill-lastname").val());
+								var address1 = jQuery.trim($("#bill-address1").val());
+								var address2 = jQuery.trim($("#bill-address2").val());
+								var city = jQuery.trim($("#bill-city").val());
+								var state = jQuery.trim($("#bill-state").find("option:selected").text());
+								var zipcode = jQuery.trim($("#bill-zipcode").val());
+								var phone = jQuery.trim($("#bill-phone").val());
+								var email = jQuery.trim($("#bill-email").val());
+								
+								//判断使用address book的地址 还是 新添加一个地址  false表示使用address book的地址 true表示新添加地址 
+								var is_new_addr = $(".billing-address").is(":visible");
+			
+								//如果新填写一个新的地址
+								if(is_new_addr)
+								{
+									$.yamibuy.common.showLoading();
+								
+									$.yamibuy.common.doAjax(
+							
+										'checkout.php',
+										
+										{
+											action:action_card,
+											account:account,
+											card_firstname:card_firstname,
+											card_lastname:card_lastname,
+											exp_year:exp_year,
+											exp_month:exp_month,
+											
+											address_id:"",
+											
+											firstname:firstname,
+											lastname:lastname,
+											address1:address1,
+											address2:address2,
+											city:city,
+											state:state,
+											zipcode:zipcode,
+											phone:phone,
+											email:email
+											
+										},
+										
+										function(data){
+											//执行失败
+											if(data.status == 1)
+											{
+												$.yamibuy.common.hideLoading();
+												$("#save-card").removeClass("disabled-prim-btn");
+												$.yamibuy.common.alert(data.message);	
+											}
+											//执行成功
+											else
+											{
+												//alert("修改成功");
+												window.location.href="checkout.php";
+											}
+										},
+										
+										{showloading:false}
+									);
+								}
+								//如果是勾选address book里面的地址
+								else
+								{
+									var address_id = $(".change-card-panel input[name=address-option]:checked").val();
+									$.yamibuy.common.showLoading();
+									$.yamibuy.common.doAjax(
+							
+										'checkout.php',
+										
+										{
+											action:action_card,
+											account:account,
+											card_firstname:card_firstname,
+											card_lastname:card_lastname,
+											exp_year:exp_year,
+											exp_month:exp_month,
+											address_id:address_id,
+											
+										},
+										
+										function(data){
+											//执行失败
+											if(data.status == 1)
+											{
+												$.yamibuy.common.hideLoading();
+												$("#save-card").removeClass("disabled-prim-btn");
+												$.yamibuy.common.alert(data.message);	
+											}
+											//执行成功
+											else
+											{
+												//alert("修改成功");
+												window.location.href="checkout.php";
+												
+											}
+										},
+										
+										{showloading:false}
+									);
+								}	
+					
+							}
+				}
+				//如果是bindAddress
+				else
+				{
+					//判断使用address book的地址 还是 新添加一个地址  false表示使用address book的地址 true表示新添地址
+					var is_new_addr = $(".billing-address").is(":visible");
+					//如果是要新加一个地址
+					if(is_new_addr)
+					{
+						var firstname = jQuery.trim($("#bill-firstname").val());
+						var lastname = jQuery.trim($("#bill-lastname").val());
+						var address1 = jQuery.trim($("#bill-address1").val());
+						var address2 = jQuery.trim($("#bill-address2").val());
+						var city = jQuery.trim($("#bill-city").val());
+						var state = jQuery.trim($("#bill-state").find("option:selected").text());
+						var zipcode = jQuery.trim($("#bill-zipcode").val());
+						var phone = jQuery.trim($("#bill-phone").val());
+						var email = jQuery.trim($("#bill-email").val());
+						
+	
+						$.yamibuy.common.showLoading();
+						$.yamibuy.common.doAjax(
+								
+							'checkout.php',
+							
+							{
+								action:"bindAddress",
+								profile_id:profile_id,
+								address_id:"",
+								
+								firstname:firstname,
+								lastname:lastname,
+								address1:address1,
+								address2:address2,
+								city:city,
+								state:state,
+								zipcode:zipcode,
+								phone:phone,
+								email:email
+								
+							},
+							
+							function(data){
+								//执行失败
+								if(data.status == 1)
+								{
+									$.yamibuy.common.hideLoading();
+									$("#save-card").removeClass("disabled-prim-btn");
+									$.yamibuy.common.alert(data.message);	
+								}
+								//执行成功
+								else
+								{
+									//alert("修改成功");
+									window.location.href="checkout.php";
+									
+								}
+							},
+							
+							{showloading:false}
+						);
+					}
+					//如果要使用地址列表的一个地址
+					else
+					{
+						//获取当前选中的地址address_id
+						var address_id = $(".change-card-panel input[name=address-option]:checked").val();
+						$.yamibuy.common.showLoading();
+						$.yamibuy.common.doAjax(
+								
+							'checkout.php',
+							
+							{
+								action:"bindAddress",
+								profile_id:profile_id,
+								address_id:address_id,
+								
+							},
+							
+							function(data){
+								//执行失败
+								if(data.status == 1)
+								{
+									$.yamibuy.common.hideLoading();
+									$("#save-card").removeClass("disabled-prim-btn");
+									$.yamibuy.common.alert(data.message);	
+								}
+								//执行成功
+								else
+								{
+									//alert("修改成功");
+									window.location.href="checkout.php";
+									
+								}
+							},
+							
+							{showloading:false}
+						);
+					}
+					
+					
+				}
+					
+
+			
+			});
+			
+			//点击显示更多银行卡
+			$("#load-more-card").click(function(){
+				$(".card-info-cont .radio-cont").show();
+			});
+		
+		});
+		
+		//删除地址
+		function deleteAddress(address_id)
+		{
+			$.yamibuy.common.confirm("Are sure to delete this address?", function(){
+				$.yamibuy.common.showLoading();
+				$.yamibuy.common.doAjax(
+			
+					'checkout.php',
+					
+					{
+						action:"removeAddress",
+						address_id:address_id
+					},
+					
+					function(data){
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else
+						{
+							//alert("该地址成功删除!");
+							window.location.href="checkout.php";
+						}
+					},
+					
+					{showloading:false}
+				);
+				
+			}, function(){
+				
+					
+			});
+			
+			
+		}
+		//process errorItem
+		function getErrorItems(address_id,btnAction,firstname,lastname,address1,address2,city,state,zipcode,phone,email,editAddress_id)
+		{			
+			$.yamibuy.common.showLoading();
+			$.yamibuy.common.doAjax(
+			
+					'checkout.php',					
+					{
+						action:"getErrorItems",
+						btnAction:btnAction,
+						address_id:address_id,
+						firstname:firstname,
+						lastname:lastname,
+						address1:address1,
+						address2:address2,
+						city:city,
+						state:state,
+						zipcode:zipcode,
+						phone:phone,
+						email:email,
+						editAddress_id:editAddress_id
+					},
+					
+					function(data){
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else
+						{
+							
+							$('#itemContainer').empty();
+							if(data.object.itemCount != 0)
+							{
+								$('#itemContainer').append(data.html);							
+								$('#itemContainer').show();
+								$('html, body').css('overflow', 'hidden');
+							}
+							else
+							{
+								$.yamibuy.common.hideLoading();
+								if(btnAction == "changeAddress")
+								{
+									changeAddress(address_id);
+								}
+								else if(btnAction == "editAddress")
+								{
+									editAddress(btnAction,firstname,lastname,address1,address2,city,state,zipcode,phone,email,editAddress_id);
+								}
+								else if(btnAction == "newAddress")
+								{
+									newAddress(btnAction,firstname,lastname,address1,address2,city,state,zipcode,phone,email);
+								}
+								else if(btnAction == "submitOrder")
+								{
+									submitOrder();
+								}
+							}
+							//window.location.href="checkout.php";
+						}
+					},
+					
+					{showloading:false}
+				);
+		}
+		//修改地址
+		function changeAddress(address_id,withErrorItem)
+		{
+			$.yamibuy.common.showLoading();
+			$('.popup-mask').css('z-index', '100');
+			$.yamibuy.common.doAjax(
+			
+					'checkout.php',
+					
+					{
+						action:"selectAddress",
+						address_id:address_id,
+						withErrorItem:withErrorItem
+					},
+					
+					function(data){
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else
+						{
+
+							window.location.href="checkout.php";
+						}
+					},
+					
+					{showloading:false}
+				);
+		}
+		
+		
+		//换银行卡 has_addr=1说明这个卡绑定了billing address, has_addr=0说明没有绑定
+		function changeCard(profile_id, has_addr)
+		{
+			//如果该卡绑定了billing address 执行change操作
+			if(has_addr === "1")
+			{
+				$.yamibuy.common.showLoading();
+				$.yamibuy.common.doAjax(
+				
+						'checkout.php',
+						
+						{
+							action:"selectPayment",
+							profile_id:profile_id
+						},
+						
+						function(data){
+							//执行失败
+							if(data.status == 1)
+							{
+								$.yamibuy.common.hideLoading();
+								$.yamibuy.common.alert(data.message);	
+							}
+							//执行成功
+							else if(data.status == 0)
+							{
+								window.location.href="checkout.php";
+							}
+							else
+							{
+								$.yamibuy.common.alert(data.message);	
+							}
+						},
+						
+						
+						{showloading:false}
+					);
+			}
+			//如果该卡没有绑定billing address
+			else
+			{
+				$.yamibuy.common.alert("Please add an existing billing address");
+				//打开添加银行卡的框
+				$("#add-card").trigger("click");
+				
+				//打开添加地址的框
+				$("#ba-checkbox").trigger("change");
+				
+				//修改提示文字
+				$("#add-card").html("Please select an existing billing address or add a new address");
+				
+				//隐藏输入卡号姓名过期日期的框
+				$(".new-payment").hide();
+				
+				//隐藏"账单地址"四个字
+				$("#billing-addr-txt").hide();
+				
+				//修改按钮文字
+				$("#save-card").html("Save Address");
+				$("#cancel-add-edit-card-btn").html("Cancel");
+				
+				//修改当前的action-card,在保存的时候 用来根据不同的action-card选择不同的操作
+				$("#action-card").val("bindAddress");
+				
+				//设定当前要绑定地址的profile_id
+				$("input[name=profile_id]").val(profile_id);
+				
+				//只显示并且选中 当前点击的银行卡,其他银行卡全部隐藏
+				$("input[name=card-option]:checked").parents(".radio-cont").siblings(".radio-cont").hide();
+				
+				//隐藏"显示更多银行卡按钮"
+				$(".load-more-btn").hide();
+	
+			}
+			
+			
+		}
+		
+		//把所有样式恢复到初始的样子
+		function resetElements()
+		{
+			$('.popup-mask').css('z-index', '100');
+			$.yamibuy.common.showLoading();
+			window.location.href="checkout.php";
+		}
+		
+		//使用点数
+		function spendPoints(is_on)
+		{
+			$.yamibuy.common.showLoading();
+			$.yamibuy.common.doAjax(
+			
+					'checkout.php',
+					
+					{
+						action:"points",
+						is_on:is_on
+					},
+					
+					function(data){
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else if(data.status == 0)
+						{
+							window.location.href="checkout.php";
+						}
+						else
+						{
+							$.yamibuy.common.alert(data.message);	
+						}
+					},
+					
+					
+					{showloading:false}
+				);
+		}
+		
+		function changeShipping(vendor_id,shipping_id)
+		{
+			$.yamibuy.common.showLoading();
+			$.yamibuy.common.doAjax(
+			
+					'checkout.php',
+					
+					{
+						action:"shipping",
+						shipping_id:shipping_id,
+						vendor_id:vendor_id
+					},
+					
+					function(data){
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else if(data.status == 0)
+						{
+							window.location.href="checkout.php";
+						}
+						else
+						{
+							$.yamibuy.common.alert(data.message);	
+						}
+					},
+					
+					
+					{showloading:false}
+				);	
+		}
+		//提交订单
+		function submitOrder()
+		{	
+			if($("input[name=payment-method]:checked").length == 0)
+			{
+				$.yamibuy.common.alert("Please choose a payment method");
+				return false;
+			}
+			//如果没有输入安全码 并且 当前选择银行卡支付是checked的状态 并且 选择银行卡版面是隐藏的状态  给与错误提示
+			if( jQuery.trim($("#card-cvv").val() ) == "" && $("#card-radio").is(":checked")&& $(".change-card-panel").is(":hidden") )
+			{
+				$.yamibuy.common.alert("Enter CVV code");
+				return false;
+			}
+			//如果当前支付方式是银行卡 并且 选择银行卡版面是可见的 并且 银行卡列表没有选中的英航卡
+			else if($("#card-radio").is(":checked") && !($(".change-card-panel").is(":hidden")) && $("input[name=card-option]:checked").length == 0)
+			{
+				$.yamibuy.common.alert("Please add card information");
+				return false;
+			}
+			//提交按钮变灰
+			$("#submit-order-final").addClass("disabled-prim-btn");
+			
+			$.yamibuy.common.showLoading();
+			$('.popup-mask').css('z-index', '100');
+			$("#order-form").submit();
+	
+		}
+		
+		function showloading()
+		{
+			$.yamibuy.common.showLoading();
+		}
+		
+		function moveToFav()
+		{
+			$.yamibuy.common.showLoading();
+			$('.popup-mask').css('z-index', '100');
+			$.yamibuy.common.doAjax(
+			
+					'checkout.php',
+					
+					{
+						action:"moveToFav",
+					},					
+					function(data)
+					{
+						//执行失败
+						if(data.status == 1)
+						{
+							$.yamibuy.common.hideLoading();
+							$.yamibuy.common.alert(data.message);	
+						}
+						//执行成功
+						else
+						{
+							window.location.href="checkout.php";
+						}
+					},
+					{showloading:false}
+				);
+		}
+		
+
+	</script>
+	{/literal}
+</body>
+
+</html>
