@@ -602,6 +602,7 @@ input:focus {
 .delivery-cont .radio-cont .radio .s-des {
 	font-size: 10px;
 	margin-left: 55px;
+	line-height: 1.5em;
 }
 
 .right-cont .item-list-cont {
